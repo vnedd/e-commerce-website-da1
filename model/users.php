@@ -31,10 +31,16 @@ function delete_user($user_id)
 
 function checklogin_admin($email, $password)
 {
-    $sql = 'SELECT * FROM users WHERE email=? AND password=?';
+    $sql = 'SELECT * FROM users WHERE email=? AND password=? AND role_id = 1 ';
     $user =  pdo_query_one($sql, $email, $password);
     return $user;
 }
 
+function checklogin_client($email, $password)
+{
+    $sql = 'SELECT * FROM users WHERE email=? AND password=? AND role_id = 2 ';
+    $user =  pdo_query_one($sql, $email, $password);
+    return $user;
+}
 
 /// register client side

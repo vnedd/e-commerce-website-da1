@@ -3,7 +3,7 @@
 include_once'/xampp/htdocs/e-commerce-website-da1/model/users.php';
 
 
-if (isset($_SESSION['Blazes'])) {
+if (isset($_SESSION['users'])) {
    header('location: index.php');
 }
 if (isset($_POST['login'])) {
@@ -19,10 +19,10 @@ if (isset($_POST['login'])) {
   }
   
   if (empty($error)) {
-  $user = checklogin_admin($email,$password);
+  $user = checklogin_client($email,$password);
   if (is_array($user)) {
-    if ($user['role_id'] == 2) {
-       $user_session_data = array(
+  
+       $user_session_data = array(git
         'user_id' => $user['user_id'],
         'name' => $user['name'],
         'email' => $user['email'],
@@ -31,17 +31,16 @@ if (isset($_POST['login'])) {
         'image_url' => $user['image_url'],
         'role_id' => $user['role_id'],
        );
-       $_SESSION['Blazes']= $user_session_data;
+       $_SESSION['users']= $user_session_data;
        header('location:index.php');
-    }else{
-        $loginError = " You are admin ";
-    }
+    
     
   }else{
     $loginError = "Email or password is incorrect, please re-enter!";
   }
-  }
-}
+}}
+  
+
 
 
 ?>
