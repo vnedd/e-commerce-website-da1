@@ -1,3 +1,15 @@
+<?php
+session_start();
+include'./model/pdo.php';
+include'./model/users.php';
+if ($_SESSION['email']) {
+   header('location: index.php');
+}
+
+
+?>
+
+
 <div class="h-screen w-full flex items-center justify-center">
     <div class="bg-white w-[500px] rounded-lg p-5 shadow-lg animate__animated animate__bounceInDown">
         <div class="flex items-center flex-col space-y-4">

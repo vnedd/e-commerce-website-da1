@@ -32,6 +32,7 @@
                 <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
                     <li><a href="index.php?act=login">Login</a></li>
                     <li><a href="index.php?act=sign-up">Sign up</a></li>
+                    <li><a href="index.php?act=log-out">Log out</a></li>
                 </ul>
             </div>
         </div>

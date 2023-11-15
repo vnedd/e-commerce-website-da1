@@ -1,3 +1,50 @@
+<?php
+// session_start();
+include_once'/xampp/htdocs/e-commerce-website-da1/model/users.php';
+
+
+if (isset($_SESSION['Blazes'])) {
+   header('location: index.php');
+}
+if (isset($_POST['login'])) {
+    $error= array();
+  $email = $_POST['email'];
+  $password = $_POST['password'];
+
+ if (empty($email)) {
+   $error['email'] = " Email Is Require";
+ }
+ if (empty($password)) {
+    $error['password'] = " Password Is Oblige";
+  }
+  
+  if (empty($error)) {
+  $user = checklogin_admin($email,$password);
+  if (is_array($user)) {
+    if ($user['role_id'] == 2) {
+       $user_session_data = array(
+        'user_id' => $user['user_id'],
+        'name' => $user['name'],
+        'email' => $user['email'],
+        'phone' => $user['phone'],
+        'address' => $user['address'],
+        'image_url' => $user['image_url'],
+        'role_id' => $user['role_id'],
+       );
+       $_SESSION['Blazes']= $user_session_data;
+       header('location:index.php');
+    }else{
+        $loginError = " You are admin ";
+    }
+    
+  }else{
+    $loginError = "Email or password is incorrect, please re-enter!";
+  }
+  }
+}
+
+
+?>
 <div class="h-screen w-full flex items-center justify-center">
     <div class="bg-white w-[500px] rounded-lg p-5 mb-8 shadow-lg animate__animated animate__bounceInDown">
         <div class="flex items-center flex-col space-y-3">

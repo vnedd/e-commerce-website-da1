@@ -78,4 +78,7 @@
             <?php echo $description ?>
         </div>
     </div>
+     <?php 
+      include('./view/comment.php');
+     ?>
 </div>
