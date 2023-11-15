@@ -12,16 +12,16 @@ function getone_category($category_id)
     return pdo_query_one($sql);
 }
 
-function insert_category($name, $description, $parent_id)
+function insert_category($name, $description, $image_url, $parent_id)
 {
-    $sql = "INSERT INTO categories (name, description, parent_id) VALUES (?,?,?)";
-    pdo_execute($sql, $name, $description, $parent_id);
+    $sql = "INSERT INTO categories (name, description,image_url, parent_id) VALUES (?,?,?)";
+    pdo_execute($sql, $name, $description, $image_url, $parent_id);
 }
 
-function update_category($category_id, $name, $description, $parent_id = null)
+function update_category($category_id, $name, $description, $image_url, $parent_id = null)
 {
-    $sql = "UPDATE categories SET name=?, description=?, parent_id=? WHERE category_id=?";
-    return pdo_execute($sql, $name, $description, $parent_id, $category_id);
+    $sql = "UPDATE categories SET name=?, description=?,image_url=?, parent_id=? WHERE category_id=?";
+    return pdo_execute($sql, $name, $description, $image_url, $parent_id, $category_id);
 }
 
 function update_when_delete_parrent($parent_id)
@@ -34,4 +34,13 @@ function delete_category($category_id)
 {
     $sql = "DELETE FROM categories WHERE category_id=?";
     return pdo_execute($sql, $category_id);
+}
+
+function count_product_in_category()
+{
+    $sql = "SELECT c.name as category_name, c.category_id, COUNT(p.product_id) as product_count FROM categories as c
+        LEFT JOIN products as p ON  c.category_id = p.category_id
+        GROUP BY category_name, c.category_id
+        ";
+    return pdo_query($sql);
 }

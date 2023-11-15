@@ -92,6 +92,14 @@
 </div>
 
 <script>
+    CKEDITOR.replace('description', {
+        width: ['100%'],
+        height: ['500px']
+    });
+</script>
+
+
+<script>
     const imageUpload = document.querySelector('.image-upload');
     const previewContainer = document.querySelector('.preview-image')
 

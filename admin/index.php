@@ -25,19 +25,19 @@ include '../model/roles.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dự án 1</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="../assets/css/index.css">
     <link href="https://cdn.jsdelivr.net/npm/daisyui@3.9.4/dist/full.css" rel="stylesheet" type="text/css" />
     <link href="https://unpkg.com/@tailwindcss/forms@0.2.1/dist/forms.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://localhost/website/admin/ckeditor/ckeditor.js"></script>
+    <script src="../ckeditor/ckeditor.js"></script>
+    <link rel="stylesheet" href="../assets/css/index.css">
 </head>
 
 <body>
     <div class="w-full overflow-x-hidden">
         <div class="w-full flex items-center">
             <?php include('./sidebar.php') ?>
-            <div class="flex-1 h-screen md:p-4">
+            <div class="flex-1 min-h-screen h-full lg:ml-[260px] ml-[80px] p-5">
                 <?php
                 if (isset($_GET['act'])) {
                     $act = $_GET['act'];
@@ -213,8 +213,22 @@ include '../model/roles.php';
                                     $error['description'] = "Please enter brand description!";
                                 }
 
+                                if (empty($_FILES['image_url']['name'])) {
+                                    $error['image_url'] = "Image is required";
+                                } else {
+                                    $targetDir = '../upload/';
+                                    $newFileName = uniqid() . $_FILES['image_url']['name'];
+                                    $targetFile = $targetDir . $newFileName;
+
+                                    if (move_uploaded_file($_FILES['image_url']['tmp_name'], $targetFile)) {
+                                        $image_url = $newFileName;
+                                    } else {
+                                        $error['image_url'] = "Some thing went wrong!!";
+                                    }
+                                }
+
                                 if (empty($error)) {
-                                    insert_category($name, $description, $parent_id);
+                                    insert_category($name, $description, $image_url, $parent_id);
                                     header('location: index.php?act=list_category');
                                 }
                             }
@@ -240,8 +254,21 @@ include '../model/roles.php';
                                         $error['description'] = "Please enter category description!";
                                     }
 
+                                    if (empty($_FILES['image_url']['name'])) {
+                                        $image_url = $billboard['image_url'];
+                                    } else {
+                                        $targetDir = '../upload/';
+                                        $newFileName = uniqid() . $_FILES['image_url']['name'];
+                                        $targetFile = $targetDir . $newFileName;
+
+                                        if (move_uploaded_file($_FILES['image_url']['tmp_name'], $targetFile)) {
+                                            $image_url = $newFileName;
+                                        } else {
+                                            $error['image_url'] = "Some thing went wrong!!";
+                                        }
+                                    }
                                     if (empty($error)) {
-                                        update_category($category_id, $name, $description, $parent_id);
+                                        update_category($category_id, $name, $description, $image_url, $parent_id);
                                         header('location: index.php?act=list_category');
                                     }
                                 }
@@ -561,6 +588,7 @@ include '../model/roles.php';
             }
         }
     </script>
+
 </body>
 
 </html>

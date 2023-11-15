@@ -1,4 +1,4 @@
-<div class="">
+<div class="min-h-screen h-full pb-0">
     <div class="flex items-center justify-between border-b border-neutral-300 pb-5 px-2">
         <div>
             <h4 class="font-semibold text-3xl ">Products</h4>
@@ -46,13 +46,12 @@
                     <tr>
                         <th>ID</th>
                         <th>Product Name</th>
-                        <th>Description</th>
                         <th>Price</th>
                         <th class="max-md:hidden">Views</th>
                         <th>Discount</th>
                         <th class="max-md:hidden">Featured?</th>
-                        <th class="max-md:hidden">Brand</th>
                         <th class="max-md:hidden">Category</th>
+                        <th class="max-md:hidden">Brand</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -65,16 +64,15 @@
                     ?>
                         <tr>
                             <th><?php echo $product_id ?></th>
-                            <td class=" text-sm font-semibog"><?php echo $name ?></td>
-                            <td>
-                                <p class=" text-sm line-clamp-1"><?php echo $description ?></p>
+                            <td class=" text-sm font-semibold"><?php echo $name ?></td>
+                            <td class=" text-sm text-left"><?php echo $price ?>$</td>
+                            <td class=" text-sm text-center max-md:hidden"><?php echo $views ?></td>
+                            <td class=" text-xs">
+                                <p class="p-1 py-2 text-center rounded-full text-white<?php echo $discount == 0 ? ' bg-neutral-500 ' : ' bg-red-500' ?>">Discount <?php echo $discount ?>%</p>
                             </td>
-                            <td class=" text-sm text-right"><?php echo $price ?>$</td>
-                            <td class=" text-sm max-md:hidden"><?php echo $views ?></td>
-                            <td class=" text-sm text-right"><?php echo $discount ?>(%)</td>
                             <td class=" text-sm max-md:hidden"><?php echo $is_featured == 0 ? "FALSE" : "TRUE" ?></td>
-                            <td class=" text-sm max-md:hidden"><?php echo $brand['name'] ?></td>
                             <td class=" text-sm max-md:hidden"><?php echo $category['name'] ?></td>
+                            <td class=" text-sm max-md:hidden"><?php echo $brand['name'] ?></td>
                             <td>
                                 <div class="dropdown dropdown-bottom dropdown-end">
                                     <label tabindex="0" class="cursor-pointer m-1">

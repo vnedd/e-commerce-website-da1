@@ -35,3 +35,6 @@ function checklogin_admin($email, $password)
     $user =  pdo_query_one($sql, $email, $password);
     return $user;
 }
+
+
+/// register client side

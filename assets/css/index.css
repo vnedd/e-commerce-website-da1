@@ -16,3 +16,30 @@
     object-fit: cover;
     border-radius: 10px;
 }
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+.noUi-connect {
+    background-color: rgb(198, 0, 198) !important;
+}
+
+.product-description p img {
+    border-radius: 10px;
+    margin: 15px auto;
+}
+.product-description p {
+    margin-bottom: 6px;
+    line-height: 1.7;
+}
+.product-description hr {
+    margin: 20px 0;
+}
+.product-description h2,
+h3 {
+    margin: 20px 0;
+    font-size: 20px;
+}
+.product-description ul {
+    margin: 20px 0 20px 25px;
+    list-style: disc;
+}

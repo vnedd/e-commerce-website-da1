@@ -1,4 +1,4 @@
-<div class="animate__animated animate__lightSpeedInLeft animate__faster">
+<div class="animate__animated animate__lightSpeedInLeft animate__faster ">
     <div class="flex items-center justify-between border-b border-neutral-300 pb-5 px-2">
         <div>
             <h4 class="font-semibold text-3xl ">Users</h4>

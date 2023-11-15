@@ -3,12 +3,12 @@ if (isset($_GET['act'])) {
     $act = $_GET['act'];
 }
 ?>
-<div class="lg:w-[290px]  w-[80px] h-screen border-r border-neutral-300 ">
+<div class="lg:w-[260px] w-[80px] h-screen fixed top-0 bottom-0 left-0 border-r bg-white border-neutral-300 ">
     <div class="flex items-center gap-x-3 justify-center px-2 py-3 border-b border-neutral-300">
         <img src="../assets/img/logo.svg" alt="logo" class="w-10 h-10">
         <p class="lg:text-lg font-bold font-sans text-slate-900 hidden lg:block">Admin Dashboard</p>
     </div>
-    <div class="flex items-center flex-col py-2 px-3 gap-y-2">
+    <div class="flex items-center flex-col py-2 px-3 gap-y-2 relative h-full">
         <a class="flex items-center lg:justify-start justify-center gap-x-2 p-2 w-full rounded-md hover:bg-slate-50 text-slate-950 <?php echo $act === "dashboard" || !isset($_GET['act']) ? "bg-slate-50" : "" ?>" href="index.php?act=dashboard">
             <div class="tooltip" data-tip="Dashboard"><i class="bi bi-house-door text-xl "></i></div>
             <p class="font-semibold text-sm hidden lg:block">Dashboard</p>
@@ -41,7 +41,7 @@ if (isset($_GET['act'])) {
             <div class="tooltip" data-tip="Comments"><i class="bi bi-chat-dots text-xl"></i></div>
             <p class="font-semibold text-sm hidden lg:block">Comments</p>
         </a>
-        <a class="flex items-center lg:justify-start justify-center gap-x-2 p-2 w-full rounded-md hover:bg-slate-50 text-slate-950 mt-auto" href="index.php?act=sign-out">
+        <a class="absolute bottom-[70px] flex items-center lg:justify-start justify-center gap-x-2 p-2 w-full rounded-md hover:bg-slate-50 text-slate-950 mt-auto" href="index.php?act=sign-out">
             <div class="tooltip" data-tip="Sign out">
                 <i class="bi bi-box-arrow-left text-xl"></i>
             </div>

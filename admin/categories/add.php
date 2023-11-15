@@ -7,6 +7,12 @@
     </div>
     <div class="py-10">
         <form action="" method="post" enctype="multipart/form-data">
+            <div class="preview-image mb-4"></div>
+            <div class="flex flex-col space-y-2 w-full md:w-2/3 mb-6">
+                <label class="font-semibold" for="image_url">Upload image</label>
+                <input class="image-upload p-2 bg-neutral-100 rounded-md cursor-pointer" id="image_url" name="image_url" type="file">
+                <?php echo !empty($error['image_url']) ? '<span class="text-red-500 text-sm">' . $error['image_url'] . '</span>' : ""  ?>
+            </div>
             <div class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4">
                 <div class="flex flex-col space-y-2">
                     <label for="name" class="font-semibold">Name</label>
@@ -37,3 +43,25 @@
         </form>
     </div>
 </div>
+
+<script>
+    const imageUpload = document.querySelector('.image-upload');
+    const previewContainer = document.querySelector('.preview-image')
+
+    imageUpload.addEventListener('change', function() {
+        previewContainer.innerHTML = "";
+        for (const file of imageUpload.files) {
+            if (file) {
+                const reader = new FileReader();
+                const img = document.createElement("img");
+                img.classList.add("product-upload-img");
+                reader.onload = function(e) {
+                    img.src = e.target.result;
+                };
+
+                reader.readAsDataURL(file);
+                previewContainer.appendChild(img);
+            }
+        }
+    });
+</script>
