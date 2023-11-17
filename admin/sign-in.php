@@ -22,21 +22,17 @@ if (isset($_POST['login'])) {
     if (empty($error)) {
         $user = checklogin_admin($email, $password);
         if (is_array($user)) {
-            if ($user['role_id'] == 1) {
-                $user_session_data = array(
-                    'user_id' => $user['user_id'],
-                    'name' => $user['name'],
-                    'email' => $user['email'],
-                    'phone' => $user['phone'],
-                    'address' => $user['address'],
-                    'image_url' => $user['image_url'],
-                    'role_id' => $user['role_id'],
-                );
-                $_SESSION['admin'] = $user_session_data;
-                header("Location:index.php");
-            } else {
-                $loginError = "You are not an admin";
-            }
+            $user_session_data = array(
+                'user_id' => $user['user_id'],
+                'name' => $user['name'],
+                'email' => $user['email'],
+                'phone' => $user['phone'],
+                'address' => $user['address'],
+                'image_url' => $user['image_url'],
+                'role_id' => $user['role_id'],
+            );
+            $_SESSION['admin'] = $user_session_data;
+            header("Location:index.php");
         } else {
             $loginError = "Email or password is incorrect, please re-enter!";
         }

@@ -46,7 +46,6 @@
                     <tr>
                         <th>ID</th>
                         <th>Product Name</th>
-                        <th>Price</th>
                         <th class="max-md:hidden">Views</th>
                         <th>Discount</th>
                         <th class="max-md:hidden">Featured?</th>
@@ -65,7 +64,6 @@
                         <tr>
                             <th><?php echo $product_id ?></th>
                             <td class=" text-sm font-semibold"><?php echo $name ?></td>
-                            <td class=" text-sm text-left"><?php echo $price ?>$</td>
                             <td class=" text-sm text-center max-md:hidden"><?php echo $views ?></td>
                             <td class=" text-xs">
                                 <p class="p-1 py-2 text-center rounded-full text-white<?php echo $discount == 0 ? ' bg-neutral-500 ' : ' bg-red-500' ?>">Discount <?php echo $discount ?>%</p>

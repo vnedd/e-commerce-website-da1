@@ -7,18 +7,18 @@
         <form class="x-8 pt-6 pb-8 mb-4 w-full" method="post" action="">
             <div class="flex flex-col space-y-6">
                 <div>
-                    <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="name">
                         Username
                     </label>
-                    <input class="form-input text-sm rounded-md w-full" id="email" name="email" type="text" placeholder="Ex: David">
-                    <?php echo !empty($error['email']) ? '<span class="text-red-500 text-sm">' . $error['email'] . '</span>' : ""  ?>
+                    <input class="form-input text-sm rounded-md w-full" id="name" name="name" type="text" placeholder="Ex: David">
+                    <?php echo !empty($error['name']) ? '<span class="text-red-500 text-xs">' . $error['name'] . '</span>' : ""  ?>
                 </div>
                 <div>
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
                         Email
                     </label>
                     <input class="form-input text-sm rounded-md w-full" id="email" name="email" type="email" placeholder="example@domain.com">
-                    <?php echo !empty($error['email']) ? '<span class="text-red-500 text-sm">' . $error['email'] . '</span>' : ""  ?>
+                    <?php echo !empty($error['email']) ? '<span class="text-red-500 text-xs">' . $error['email'] . '</span>' : ""  ?>
                 </div>
                 <div class="relative">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
@@ -28,9 +28,9 @@
                     <div class="toggle-show-password absolute cursor-pointer h-[40px] w-[40px] right-1 top-[41%]  flex items-center justify-center">
                         <i class="bi bi-eye "></i>
                     </div>
-                    <?php echo !empty($error['password']) ? '<span class="text-red-500 text-sm">' . $error['password'] . '</span>' : ""  ?>
+                    <?php echo !empty($error['password']) ? '<span class="text-red-500 text-xs">' . $error['password'] . '</span>' : ""  ?>
                 </div>
-                <button class="btn md:btn-md btn-sm capitalize bg-slate-700 hover:bg-slate-800 w-full text-white" type="submit" name="login">
+                <button class="btn md:btn-md btn-sm capitalize bg-slate-700 hover:bg-slate-800 w-full text-white" type="submit" name="sign-up">
                     Create account
                 </button>
                 <?php echo !empty($loginError) ? '<span class="text-red-500 text-sm">' . $loginError . '</span>' : ""  ?>

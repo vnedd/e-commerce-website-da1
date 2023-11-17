@@ -22,18 +22,18 @@ function getone_product($product_id)
     return pdo_query_one($sql);
 }
 
-function insert_product($name, $descrition, $price, $quantity, $discount, $category_id, $brand_id, $is_featured)
+function insert_product($name, $descrition, $discount, $category_id, $brand_id, $is_featured)
 {
-    $sql = "INSERT INTO products (name, description, price, quantity, discount, category_id, brand_id, is_featured) VALUES(?,?,?,?,?,?,?,?) ";
-    $pdo = pdo_execute($sql, $name, $descrition, $price, $quantity, $discount, $category_id, $brand_id, $is_featured);
+    $sql = "INSERT INTO products (name, description, discount, category_id, brand_id, is_featured) VALUES(?,?,?,?,?,?) ";
+    $pdo = pdo_execute($sql, $name, $descrition, $discount, $category_id, $brand_id, $is_featured);
     return $pdo->lastInsertId();
 }
 
-function update_product($product_id, $name, $description, $price, $quantity, $discount, $category_id, $brand_id, $is_featured)
+function update_product($product_id, $name, $description, $discount, $category_id, $brand_id, $is_featured)
 {
 
-    $sql = "UPDATE products SET name=?, description=?, price=?, quantity=?, discount=?, category_id=?, brand_id=?, is_featured=? where product_id = ?";
-    pdo_execute($sql, $name, $description, $price, $quantity, $discount, $category_id, $brand_id, $is_featured, $product_id);
+    $sql = "UPDATE products SET name=?, description=?, discount=?, category_id=?, brand_id=?, is_featured=? where product_id = ?";
+    pdo_execute($sql, $name, $description, $discount, $category_id, $brand_id, $is_featured, $product_id);
 }
 
 function delete_product($product_id)
@@ -62,6 +62,7 @@ function getall_product_shoppage($keyword, $min, $max, $category_id, $brand_id)
     $sql = "SELECT products.*, categories.name as category_name, GROUP_CONCAT(images.image_url) AS image_urls
     FROM products
     INNER JOIN images ON products.product_id = images.product_id
+    LEFT JOIN variants ON variants.product_id = products.product_id
     LEFT JOIN categories ON products.category_id = categories.category_id 
     WHERE 1";
 

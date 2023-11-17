@@ -1,6 +1,6 @@
 <?php
 
-function getall_image_by_id_product($product_id)
+function getall_image_by_productId($product_id)
 {
     $sql = "SELECT * FROM images WHERE product_id='$product_id'";
     return pdo_query($sql);

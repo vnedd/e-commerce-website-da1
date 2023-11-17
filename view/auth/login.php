@@ -11,7 +11,7 @@
                         Email
                     </label>
                     <input class="form-input text-sm rounded-md w-full" id="email" name="email" type="text" placeholder="Username">
-                    <?php echo !empty($error['email']) ? '<span class="text-red-500 text-sm">' . $error['email'] . '</span>' : ""  ?>
+                    <?php echo !empty($error['email']) ? '<span class="text-red-500 text-xs">' . $error['email'] . '</span>' : ""  ?>
                 </div>
                 <div class="relative">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
@@ -21,12 +21,12 @@
                     <div class="toggle-show-password absolute cursor-pointer h-[40px] w-[40px] right-1 top-[41%]  flex items-center justify-center">
                         <i class="bi bi-eye "></i>
                     </div>
-                    <?php echo !empty($error['password']) ? '<span class="text-red-500 text-sm">' . $error['password'] . '</span>' : ""  ?>
+                    <?php echo !empty($error['password']) ? '<span class="text-red-500 text-xs">' . $error['password'] . '</span>' : ""  ?>
                 </div>
                 <button class="btn md:btn-md btn-sm capitalize bg-slate-700 hover:bg-slate-800 w-full text-white" type="submit" name="login">
                     Sign In
                 </button>
-                <?php echo !empty($loginError) ? '<span class="text-red-500 text-sm">' . $loginError . '</span>' : ""  ?>
+                <?php echo !empty($loginError) ? '<span class="text-red-500 text-xs">' . $loginError . '</span>' : ""  ?>
             </div>
         </form>
         <p class="text-sm text-center">

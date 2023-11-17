@@ -23,7 +23,7 @@
             ?>
                 <div class="grid grid-cols-10 items-center gap-x-4 cart-item text-sm md:text-base">
                     <img class=" col-span-2 h-[110px] rounded-lg object-cover" src="./<?php echo $image_path . $image_url ?>" alt="">
-                    <h3 class=" col-span-3 line-clamp-2"><?php echo $name ?></h3>
+                    <h3 class=" col-span-3 line-clamp-2"><?php echo $name . " - " . $variant_name ?></h3>
                     <div class="lg:col-span-3 col-span-2 flex justify-center items-center space-x-4">
                         <div class="flex flex-col md:flex-row items-center md:space-x-2 md:space-y-0 space-y-2">
                             <span class="descrease-cart-qty btn btn-square btn-sm rounded-full btn-outline cursor-pointer font-bold text-lg">-</span>

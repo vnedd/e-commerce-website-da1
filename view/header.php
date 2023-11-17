@@ -1,6 +1,10 @@
 <div class=" bg-white shadow-lg px-7 py-2 fixed top-0 left-0 right-0 h-[90px] z-50">
-    <div class=" flex items-center h-full mx-auto">
-        <div class="flex items-center space-x-3 lg:pr-16 pr-6">
+    <div class=" flex items-center justify-between md:justify-start h-full mx-auto">
+        <div class="md:hidden">
+            hello
+        </div>
+
+        <div class="flex items-center space-x-3 lg:pr-16 pr-6 shrink">
             <a href="index.php"><img src="./assets/img/logo.svg" alt="logo" class="w-14 h-14"></a>
         </div>
         <nav class="flex justify-between">
@@ -30,8 +34,20 @@
             <div class="dropdown dropdown-end">
                 <label tabindex="0" class="flex items-center justify-between space-x-4 border border-slate-400 px-4 py-2 cursor-pointer rounded-full"> <i class="bi bi-person"></i> <i class="bi bi-caret-down-fill"></i></label>
                 <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
-                    <li><a href="index.php?act=login">Login</a></li>
-                    <li><a href="index.php?act=sign-up">Sign up</a></li>
+                    <?php
+                    if (isset($_SESSION['user'])) {
+                    ?>
+                        <li><a href="index.php?act=profile&user_id=<?php echo $_SESSION['user']['user_id'] ?>">My profile</a></li>
+                        <li><a href="index.php?act=sign-out">Sign Out</a></li>
+                    <?php
+                    } else {
+                    ?>
+                        <li><a href="index.php?act=login">Login</a></li>
+                        <li><a href="index.php?act=sign-up">Sign up</a></li>
+                    <?php
+                    }
+                    ?>
+
                 </ul>
             </div>
         </div>

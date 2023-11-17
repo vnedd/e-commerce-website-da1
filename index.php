@@ -8,7 +8,9 @@ include './model/pdo.php';
 include './model/billboards.php';
 include './model/categories.php';
 include './model/products.php';
+include './model/variants.php';
 include './model/brands.php';
+include './model/users.php';
 ?>
 
 <!DOCTYPE html>
@@ -20,10 +22,9 @@ include './model/brands.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dự án 1</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.0.3/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.0.7/dist/full.min.css" rel="stylesheet" type="text/css" />
     <link href="https://unpkg.com/@tailwindcss/forms@0.2.1/dist/forms.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nouislider@14.6.4/distribute/nouislider.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="./assets/css/reset.css">
     <link rel="stylesheet" href="./assets/css/index.css">
@@ -41,10 +42,68 @@ include './model/brands.php';
                     $act = $_GET['act'];
                     switch ($act) {
                         case 'login':
+                            if (isset($_POST['login'])) {
+                                $error = array();
+                                $email = $_POST['email'];
+                                $password = $_POST['password'];
+
+                                if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                                    $error['email'] = 'Invalid email address';
+                                }
+                                if (strlen($password) < 6) {
+                                    $error['password'] = 'Password must be at least 6 characters long';
+                                }
+                                $user = checklogin_client($email, $password);
+
+                                if (is_array($user)) {
+                                    $_SESSION['user'] = $user;
+                                    header('location: index.php');
+                                } else {
+                                    $login_error = "Email or password invalid!";
+                                }
+                            }
                             include('./view/auth/login.php');
                             break;
                         case 'sign-up':
+                            if (isset($_POST['sign-up'])) {
+                                $error = array();
+                                $name = $_POST['name'];
+                                $email = $_POST['email'];
+                                $password = $_POST['password'];
+
+                                if (empty($name)) {
+                                    $error['name'] = 'This field is required!';
+                                }
+
+                                if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                                    $error['email'] = 'Invalid email address';
+                                }
+
+                                $user = checksignup_client($email);
+                                if (is_array($user)) {
+                                    $error['email'] = 'Email already exists';
+                                }
+                                if (strlen($password) < 6) {
+                                    $error['password'] = 'Password must be at least 6 characters long';
+                                }
+
+                                if (empty($error)) {
+                                    // insert into database
+                                    insert_user($name, $email, $password);
+                                    header('location: index.php?act=login');
+                                }
+                            }
                             include('./view/auth/sign-up.php');
+                            break;
+                        case 'sign-out':
+                            unset($_SESSION['user']);
+                            header('location: index.php?act=login');
+                            break;
+                        case "profile":
+                            if (isset($_GET['user_id']) && isset($_SESSION['user'])) {
+                                $user = $_SESSION['user'];
+                            }
+                            include('./view/auth/profile.php');
                             break;
                         case 'view-cart':
                             $carts = $_SESSION['carts'];
@@ -52,22 +111,29 @@ include './model/brands.php';
                             break;
                         case 'addtocart':
                             if (isset($_POST['add-to-cart'])) {
-                                $reload = false;
                                 $product_id = $_POST['product_id'];
                                 $name = $_POST['name'];
-                                $price = $_POST['price'];
+                                $discount = $_POST['discount'];
                                 $image_url = $_POST['image_url'];
                                 $quantity = $_POST['quantity'];
+                                $variant_id = $_POST['variant_id'];
 
-                                $dataCart = array(
-                                    'product_id' => $product_id,
-                                    'name' => $name,
-                                    'price' => $price,
-                                    'image_url' => $image_url,
-                                    'quantity' => $quantity,
-                                );
-                                $_SESSION['carts'][] = $dataCart;
-                                header('location: index.php?act=view-cart');
+                                $variant = getone_variant($variant_id);
+
+                                if (is_array($variant)) {
+                                    $dataCart = array(
+                                        'product_id' => $product_id,
+                                        'name' => $name,
+                                        'price' => floatval($variant['price']) -  (floatval($variant['price']) / 100) * floatval($discount),
+                                        'image_url' => $image_url,
+                                        'quantity' => $quantity,
+                                        'variant_id' => $variant['variant_id'],
+                                        'variant_name' => $variant['variant_name'],
+                                        'variant_price' => $variant['price'],
+                                    );
+                                    $_SESSION['carts'][] = $dataCart;
+                                    header('location: index.php?act=view-cart');
+                                }
                             }
                             break;
                         case 'update-cart':
@@ -90,6 +156,10 @@ include './model/brands.php';
                             }
                             break;
 
+                        case 'checkout':
+
+                            include('./view/checkout.php');
+                            break;
                         case 'shop':
                             $keyword = "";
                             $minPrice = "";
@@ -97,16 +167,12 @@ include './model/brands.php';
                             $category_id = "";
                             $brand_id = "";
                             $brands = getall_brand();
+
                             $product_in_categorys = count_product_in_category();
-                            if (isset($_GET['min-price']) && isset($_GET['max-price'])) {
-                                $minPrice = $_GET['min-price'];
-                                $maxPrice = $_GET['max-price'];
+                            if (isset($_POST['filter'])) {
+                                $minPrice = $_POST['min-price'];
+                                $maxPrice = $_POST['max-price'];
                                 $keyword = $_POST['keyword'];
-                                if ($minPrice > $maxPrice) {
-                                    $price_error = "Please re-enter valid value!";
-                                } else {
-                                    $products = getall_product_shoppage($keyword, $minPrice, $maxPrice, $category_id, $brand_id);
-                                }
                             }
                             if (isset($_GET['category_id'])) {
                                 $category_id = $_GET['category_id'];
@@ -115,13 +181,14 @@ include './model/brands.php';
                                 $brand_id = $_GET['brand_id'];
                             }
                             $products = getall_product_shoppage($keyword, $minPrice, $maxPrice, $category_id, $brand_id);
-
                             include('./view/shop.php');
                             break;
                         case 'product':
                             if (isset($_GET['product_id'])) {
                                 $product_id = $_GET['product_id'];
                                 $product = getone_product_client($product_id);
+                                $variants = get_variant_by_productId($product_id);
+                                $variantDataJson = json_encode($variants);
                                 extract($product);
                                 $image_urls = explode(',', $image_urls);
                                 include('./view/product.php');
@@ -129,6 +196,7 @@ include './model/brands.php';
                                 header('location: index.php');
                             }
                             break;
+
                         default:
                             $billboards = getall_billboard();
                             $categories = getall_category();

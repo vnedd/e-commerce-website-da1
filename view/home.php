@@ -50,14 +50,16 @@
                 <?php
                 foreach ($feature_products as $product) {
                     extract($product);
+                    $variants = get_variant_by_productId($product_id);
                     $productJson = json_encode($product);
+                    $variantJson = json_encode($variants);
                     $image_urls = explode(',', $image_urls);
                 ?>
                     <swiper-slide>
                         <div class="relative">
                             <div class="relative group overflow-hidden w-full">
                                 <img class="w-full rounded-lg h-[320px] object-cover" src="./<?php echo $image_path . $image_urls[0] ?>" alt="">
-                                <div onclick="openModal(<?php echo htmlspecialchars($productJson) ?>)" class="absolute btn btn-circle btn-outline bg-white border-0 shadow-md rounded-full bottom-5 left-[50%] -translate-x-[50%] translate-y-28 group-hover:translate-y-0  transition">
+                                <div onclick="openModal(<?php echo htmlspecialchars($productJson) ?>,<?php echo htmlspecialchars($variantJson) ?> )" class="absolute btn btn-circle btn-outline bg-white border-0 shadow-md rounded-full bottom-5 left-[50%] -translate-x-[50%] translate-y-28 group-hover:translate-y-0  transition">
                                     <i class="bi bi-arrows-angle-expand text-xl"></i>
                                 </div>
                             </div>
@@ -72,7 +74,7 @@
                             ?>
                         </div>
                         <div>
-                            <a href="index.php?act=product&product_id=<?php echo $product_id ?>" class="text-center mt-4 font-semibold line-clamp-1"><?php echo $name ?></a>
+                            <a href="index.php?act=product&product_id=<?php echo $product_id ?>" class="text-center mt-4 font-semibold line-clamp-1"><?php echo $name . " - " . $variants['0']['variant_name'] ?></a>
 
                             <div class="flex items-center flex-col text-center mt-5">
                                 <span class="font-thin text-sm">Category: <span class="font-bold"><?php echo $category_name ?></span></span>
@@ -80,13 +82,13 @@
                                 if ($discount != 0) {
                                 ?>
                                     <div class="mt-4">
-                                        <span class="text-slate-400 font-thin line-through mr-2"><?php echo $price; ?>$</span>
-                                        <span class="font-bold text-xl"><?php echo $price -  ($price / 100) * $discount; ?>$</span>
+                                        <span class="text-slate-400 font-thin line-through mr-2"><?php echo $variants[0]['price']; ?>$</span>
+                                        <span class="font-bold text-xl"><?php echo $variants[0]['price'] -  ($variants[0]['price'] / 100) * $discount; ?>$</span>
                                     </div>
                                 <?php
                                 } else {
                                 ?>
-                                    <span class="font-bold text-xl mt-4"><?php echo $price; ?>$</span>
+                                    <span class="font-bold text-xl mt-4"><?php echo $variants[0]['price']; ?>$</span>
                                 <?php
                                 }
                                 ?>

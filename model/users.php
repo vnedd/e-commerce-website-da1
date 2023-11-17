@@ -11,7 +11,7 @@ function getone_user($user_id)
     return pdo_query_one($sql, $user_id);
 }
 
-function insert_user($name, $email, $password, $phone, $address, $image_url, $role_id = 2)
+function insert_user($name, $email, $password, $phone = "", $address = "", $image_url = "", $role_id = 2)
 {
     $sql = "INSERT INTO users (name, email, password, phone, address, image_url,role_id) VALUES (?,?,?,?,?,?,?)";
     pdo_execute($sql, $name, $email, $password, $phone, $address, $image_url, $role_id);
@@ -31,10 +31,24 @@ function delete_user($user_id)
 
 function checklogin_admin($email, $password)
 {
-    $sql = 'SELECT * FROM users WHERE email=? AND password=?';
+    $sql = 'SELECT * FROM users WHERE email=? AND password=? AND role_id=1';
     $user =  pdo_query_one($sql, $email, $password);
     return $user;
 }
 
 
 /// register client side
+
+function checksignup_client($email)
+{
+    $sql = "SELECT * FROM users WHERE email=?";
+    $user = pdo_query_one($sql, $email);
+    return $user;
+}
+
+function checklogin_client($email, $password)
+{
+    $sql = 'SELECT * FROM users WHERE email=? AND password=? AND role_id=2';
+    $user =  pdo_query_one($sql, $email, $password);
+    return $user;
+}

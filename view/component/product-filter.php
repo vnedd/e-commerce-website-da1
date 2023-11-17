@@ -14,7 +14,7 @@
             </div>
         </div>
         <?php echo !empty($price_error) ? '<span class="text-red-500 text-sm">' . $price_error . '</span>' : ""  ?>
-        <button onclick="updateUrlAndSubmit()" class="btn bg-slate-700 hover:bg-slate-800 text-white mt-5 rounded-md w-full">Apply</button>
+        <button type="submit" name="filter" class="btn bg-slate-700 hover:bg-slate-800 text-white mt-5 rounded-md w-full">Apply</button>
     </form>
 </div>
 <div class="flex flex-col pt-6">

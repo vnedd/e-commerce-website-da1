@@ -1,18 +1,16 @@
 <!-- Modal Overlay -->
 <div id="modalOverlay" class="fixed top-0 left-0 right-0 bottom-0 bg-slate-900 bg-opacity-40 z-50 hidden justify-center items-center ">
     <!-- Modal Content -->
-    <div class="bg-white lg:w-[700px] py-6 px-4 rounded-lg relative animate__animated animate__flipInX animate__faster">
+    <div class="bg-white lg:w-[800px] py-6 px-4 rounded-lg relative animate__animated animate__flipInX animate__faster">
         <div class="absolute right-2 top-2 w-8 h-8 rounded-full hover:bg-slate-100 flex items-center justify-center cursor-pointer" onclick="closeModal()"><i class="bi bi-x text-lg"></i></div>
         <div class="flex flex-row space-x-5 mt-6">
             <div class="w-1/2">
                 <img id="modal__product-image" class=" h-[300px] rounded-md object-cover" src="" alt="">
             </div>
             <div class="w-1/2 shrink-1">
-                <div>
-                    <h1 id="modal__product-name" class="text-gray-800 font-medium text-md my-4">Product Name</h1>
-                    <p id="modal__product-price" class="font-bold text-xl">Price</p>
-                </div>
+                <h1 id="modal__product-name" class="text-gray-800 font-medium text-md my-4">Product Name</h1>
                 <form id="add-to-cart-form" class="mt-6" action="index.php?act=addtocart" method="post">
+                    <div id="modal__product-variant"></div>
                     <div>
                         <p class="font-semibold mb-4">Quantity:</p>
                         <div class="flex items-center space-x-2">

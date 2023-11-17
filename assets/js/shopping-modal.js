@@ -17,24 +17,50 @@ if (inscreaseQtyBtn && decreaseQtyBtn && cartQtyInput) {
         }
     });
 
-    function openModal(data) {
-        let price =
-            Number(data.price) -
-            (Number(data.price) * Number(data.discount)) / 100;
-        const dataImages = data.image_urls.split(',');
+    function openModal(product, variants) {
+        const productImages = product.image_urls.split(',');
 
         document.getElementById('modalOverlay').style.display = 'flex';
-        document.getElementById('modal__product-name').innerText = data.name;
-        document.getElementById('modal__product-price').innerText = `$${price}`;
+        document.getElementById('modal__product-name').innerText = product.name;
+
+        const renderVariant = variants
+            .map((variant, index) => {
+                return `
+            <label for="variant_${
+                variant.variant_id
+            }" class="flex p-3 w-full cursor-pointer bg-white border border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400">
+                <input type="radio" name="variant_id" id="variant_${
+                    variant.variant_id
+                }" ${index === 0 ? 'checked' : ''} value="${
+                    variant.variant_id
+                }" class="shrink-0 mt-0.5 border-gray-200 rounded-full text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800">
+                <div class="text-sm text-gray-500 ms-3 dark:text-gray-400">
+                    <p class="text-sm">${variant.variant_name}</p>
+                    <p class="text-sm font-bold mt-4"><span class="text-xs">(-${
+                        product.discount
+                    }%)$</span>${
+                    Number(variant.price) -
+                    (Number(variant.price) * Number(product.discount)) / 100
+                }</p>
+                </div>
+            </label>`;
+            })
+            .join('');
+
+        document.getElementById(
+            'modal__product-variant',
+        ).innerHTML = `<div class="grid md:grid-cols-2 grid-cols-1 gap-2 mb-6">${renderVariant}</div>`;
+
         document.getElementById(
             'modal__product-image',
-        ).src = `./upload/${dataImages[0]}`;
+        ).src = `./upload/${productImages[0]}`;
+
         const divElm = document.createElement('div');
         divElm.innerHTML = `
-            <input type="hidden" name="product_id" value="${data.product_id}">
-            <input type="hidden" name="name" value="${data.name}">
-            <input type="hidden" name="price" value="${Number(data.price)}">
-            <input type="hidden" name="image_url" value="${dataImages[0]}">
+            <input type="hidden" name="product_id" value="${product.product_id}">
+            <input type="hidden" name="name" value="${product.name}">
+            <input type="hidden" name="discount" value="${product.discount}">
+            <input type="hidden" name="image_url" value="${productImages[0]}">
         `;
         document.getElementById('add-to-cart-form').prepend(divElm);
     }

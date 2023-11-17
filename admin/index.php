@@ -10,6 +10,7 @@ include '../model/billboards.php';
 include '../model/brands.php';
 include '../model/categories.php';
 include '../model/products.php';
+include '../model/variants.php';
 include '../model/images.php';
 include '../model/users.php';
 include '../model/roles.php';
@@ -296,7 +297,6 @@ include '../model/roles.php';
                                 $category_id = "";
                                 $brand_id = "";
                             }
-
                             $list_product = getall_product($keyword, $category_id, $brand_id);
                             $list_category = getall_category();
                             $list_brand = getall_brand();
@@ -311,12 +311,18 @@ include '../model/roles.php';
 
                                 $name = $_POST['name'];
                                 $description = $_POST['description'];
-                                $price = $_POST['price'];
                                 $discount = isset($_POST['discount']) ? floatval($_POST['discount']) : 0.0;
                                 $is_featured = isset($_POST['is_featured']) ? 1 : 0;
-                                $quantity = $_POST['quantity'];
                                 $brand_id = $_POST['brand_id'];
                                 $category_id = $_POST['category_id'];
+
+                                $variant_names = $_POST['variant_name'];
+                                $variant_prices = $_POST['variant_price'];
+                                $variant_quantitys = $_POST['variant_quantity'];
+
+                                if (empty($variant_names) || empty($variant_prices) || empty($variant_quantitys)) {
+                                    $error['variant'] = "Please enter product variant information";
+                                }
 
                                 if (empty($name)) {
                                     $error['name'] = "Please enter product name!";
@@ -324,12 +330,7 @@ include '../model/roles.php';
                                 if (empty($description)) {
                                     $error['description'] = "Please enter product description!";
                                 }
-                                if (empty($price)) {
-                                    $error['price'] = "Please enter product price!";
-                                }
-                                if (empty($quantity)) {
-                                    $error['quantity'] = "Please enter product quantity!";
-                                }
+
                                 if (empty($brand_id)) {
                                     $error['brand_id'] = "Please enter product brand Id!";
                                 }
@@ -341,8 +342,9 @@ include '../model/roles.php';
                                     $error['images'] = "Upload at least 1 image";
                                 }
 
+
                                 if (empty($error)) {
-                                    $last_id = insert_product($name, $description, $price, $quantity, $discount, $category_id, $brand_id, $is_featured);
+                                    $last_id = insert_product($name, $description, $discount, $category_id, $brand_id, $is_featured);
                                     if ($last_id) {
                                         foreach ($_FILES['images']['name'] as $key => $name) {
                                             $targetDir = '../upload/';
@@ -356,11 +358,15 @@ include '../model/roles.php';
                                                 $error['images'] = "Some thing went wrong!!";
                                             }
                                         }
+                                        foreach ($variant_names as $key => $variant_name) {
+                                            $variant_price = $variant_prices[$key];
+                                            $variant_quantity = $variant_quantitys[$key];
+                                            insert_variant($variant_name, $variant_price, $variant_quantity, $last_id);
+                                        }
                                     }
                                     header('location: index.php?act=list_product');
                                 }
                             }
-
                             include('./products/add.php');
                             break;
                         case "update_product":
@@ -369,19 +375,23 @@ include '../model/roles.php';
                             if (isset($_GET['product_id'])) {
                                 $product_id = $_GET['product_id'];
                                 $current_pd = getone_product($product_id);
-                                $product_images = getall_image_by_id_product($product_id);
+                                $product_images = getall_image_by_productId($product_id);
+                                $variants = get_variant_by_productId($product_id);
 
-                                if (isset($_POST['add_product'])) {
+                                if (isset($_POST['update_product'])) {
                                     $error = array();
 
                                     $name = $_POST['name'];
                                     $description = $_POST['description'];
-                                    $price = $_POST['price'];
                                     $discount = isset($_POST['discount']) ? floatval($_POST['discount']) : 0.0;
                                     $is_featured = isset($_POST['is_featured']) ? 1 : 0;
-                                    $quantity = $_POST['quantity'];
                                     $brand_id = $_POST['brand_id'];
                                     $category_id = $_POST['category_id'];
+
+
+                                    $variant_names = $_POST['variant_name'];
+                                    $variant_prices = $_POST['variant_price'];
+                                    $variant_quantitys = $_POST['variant_quantity'];
 
                                     if (empty($name)) {
                                         $error['name'] = "Please enter product name!";
@@ -389,20 +399,16 @@ include '../model/roles.php';
                                     if (empty($description)) {
                                         $error['description'] = "Please enter product description!";
                                     }
-                                    if (empty($price)) {
-                                        $error['price'] = "Please enter product price!";
-                                    }
-                                    if (empty($quantity)) {
-                                        $error['quantity'] = "Please enter product quantity!";
-                                    }
+
                                     if (empty($brand_id)) {
                                         $error['brand_id'] = "Please enter product brand Id!";
                                     }
                                     if (empty($category_id)) {
                                         $error['category_id'] = "Please enter product category Id!";
                                     }
+
                                     if (empty($error)) {
-                                        update_product($product_id, $name, $description, $price, $quantity, $discount, $category_id, $brand_id, $is_featured);
+                                        update_product($product_id, $name, $description, $discount, $category_id, $brand_id, $is_featured);
                                         if (!empty($_FILES['images']['name'][0])) {
                                             deleteall_image_by_id_product($product_id);
                                             foreach ($_FILES['images']['name'] as $key => $name) {
@@ -418,6 +424,12 @@ include '../model/roles.php';
                                                 }
                                             }
                                         }
+                                        deleteall_variant_by_id_product($product_id);
+                                        foreach ($variant_names as $key => $variant_name) {
+                                            $variant_price = $variant_prices[$key];
+                                            $variant_quantity = $variant_quantitys[$key];
+                                            insert_variant($variant_name, $variant_price, $variant_quantity, $product_id);
+                                        }
                                         header('location: index.php?act=list_product');
                                     }
                                 }
@@ -429,6 +441,7 @@ include '../model/roles.php';
                             if ($_GET['product_id']) {
                                 $product_id = $_GET['product_id'];
                                 deleteall_image_by_id_product($product_id);
+                                deleteall_variant_by_id_product($product_id);
                                 delete_product($_GET['product_id']);
                                 header("Location:index.php?act=list_product");
                             }
@@ -501,7 +514,11 @@ include '../model/roles.php';
                                 $user_id = $_GET['user_id'];
                                 $current_user = getone_user($user_id);
                                 $roles = getall_role();
-                                $arrayAddress = explode(',', $current_user['address']);
+                                $arrayAddress = array();
+                                if (!empty($current_user['address'])) {
+                                    $arrayAddress = explode(',', $current_user['address']);
+                                }
+
                                 if (isset($_POST['update_user'])) {
                                     $error = array();
                                     $name = $_POST['name'];
@@ -512,7 +529,6 @@ include '../model/roles.php';
                                     $district = $_POST['district'];
                                     $ward = $_POST['ward'];
                                     $role_id = $_POST['role_id'];
-
 
                                     if (empty($name)) {
                                         $error['name'] = "Name is required!";

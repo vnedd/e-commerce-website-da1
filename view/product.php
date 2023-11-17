@@ -13,22 +13,28 @@
                 ?>
             </swiper-container>
         </div>
-        <div class="flex flex-col space-y-4">
+
+        <form id="add-to-cart-form" class="flex flex-col space-y-4" action="index.php?act=addtocart" method="post">
             <h3 class="text-xl font-medium"><?php echo $name ?></h3>
-            <?php
-            if ($discount != 0) {
-            ?>
-                <div class="mt-4">
-                    <span class="text-slate-400 font-thin line-through mr-2"><?php echo $price; ?>$</span>
-                    <span class="font-bold text-xl"><?php echo $price -  ($price / 100) * $discount; ?>$</span>
+            <div>
+                <div class="grid md:grid-cols-2 grid-cols-1 gap-2 ">
+                    <?php
+                    foreach ($variants as $key => $variant) {
+                        $discountPrice = floatval($variant['price']) - (floatval($variant['price']) * floatval($discount)) / 100;
+                    ?>
+                        <label for="variant_<?php echo $variant['variant_id'] ?>" class="flex p-3 w-full cursor-pointer bg-white border border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400">
+                            <input type="radio" <?php echo $key === 0 ? "checked" : "" ?> onchange="handlerChangeInput()" name="variant_id" value="<?php echo $variant['variant_id'] ?>" id="variant_<?php echo $variant['variant_id'] ?>" class=" shrink-0 mt-0.5 border-gray-200 rounded-full text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800">
+                            <div class="text-sm text-gray-500 ms-3 dark:text-gray-400">
+                                <p class="text-sm"><?php echo $variant['variant_name'] ?></p>
+                                <p class="text-sm font-bold mt-4"><span class="text-neutral-300 line-through text-xs mr-2">$<?php echo $variant['price'] ?></span>$<?php echo $discountPrice ?></p>
+                            </div>
+                        </label>
+                    <?php
+                    }
+                    ?>
                 </div>
-            <?php
-            } else {
-            ?>
-                <span class="font-bold text-xl mt-4"><?php echo $price; ?>$</span>
-            <?php
-            }
-            ?>
+            </div>
+
             <div class="w-full rounded-md border relative">
                 <div class="absolute w-full h-[40px] top-0 bg-violet-500 rounded-md flex items-center px-3 text-white">
                     <i class="bi bi-gift mr-3"></i>
@@ -44,31 +50,24 @@
             </div>
             <p class="text-sm text-neutral-500 uppercase">Category: <span class="font-semibold text-slate-900"><?php echo $category_name ?></span></p>
             <p class="text-sm text-neutral-500 uppercase">Brand: <span class="font-semibold text-slate-900"><?php echo $brand_name ?></span></p>
-            <?php
-            if ($quantity > 0) {
-            ?>
-                <p class="text-sm text-violet-700">In Stock <i class="bi bi-check"></i></p>
-            <?php
-            } else {
-            ?>
-                <p class="text-sm text-violet-700">Out Stock</p>
-            <?php
-            }
-            ?>
-            <form id="add-to-cart-form" class="mt-6" action="index.php?act=addtocart" method="post">
-                <input type="hidden" name="product_id" value="<?php echo $product_id ?>">
-                <input type="hidden" name="name" value="<?php echo $name ?>">
-                <input type="hidden" name="price" value="<?php echo $price ?>">
-                <input type="hidden" name="image_url" value="<?php echo $image_urls[0] ?>">
-                <div class="flex items-center space-x-3">
-                    <p class="font-semibold">Quantity:</p>
-                    <span class="descrease-cart-qty btn btn-square btn-sm rounded-full btn-outline cursor-pointer font-bold text-xl">-</span>
-                    <input id="cart-qty-input" type="number" min=1 value="1" name="quantity" class="form-input w-[80px] ">
-                    <span class="inscrease-cart-qty btn btn-square btn-sm rounded-full btn-outline cursor-pointer font-bold text-xl">+</span>
-                </div>
-                <button class="btn mt-6 bg-slate-700 hover:bg-slate-800 text-white w-full rounded-full <?php echo $quantity > 0 ? "" : "btn-disabled" ?>" type="submit" name="add-to-cart">Add to cart</button>
-            </form>
-        </div>
+
+            <div class="product-quantity-wrapper flex items-center space-x-1 text-sm">
+                <p class="product-quantity text-violet-700 mr-2"><?php echo $variants[0]['quantity'] ?></p>
+                <p class="text-violet-700">In Stock <i class="bi bi-check"></i></p>
+            </div>
+
+            <input type="hidden" name="product_id" value="<?php echo $product_id ?>">
+            <input type="hidden" name="name" value="<?php echo $name ?>">
+            <input type="hidden" name="discount" value="<?php echo $discount ?>">
+            <input type="hidden" name="image_url" value="<?php echo $image_urls[0] ?>">
+            <div class="flex items-center space-x-3">
+                <p class="font-semibold">Quantity:</p>
+                <span class="descrease-cart-qty btn btn-square btn-sm rounded-full btn-outline cursor-pointer font-bold text-xl">-</span>
+                <input id="cart-qty-input" type="number" min=1 value="1" name="quantity" class="form-input w-[80px] ">
+                <span class="inscrease-cart-qty btn btn-square btn-sm rounded-full btn-outline cursor-pointer font-bold text-xl">+</span>
+            </div>
+            <button class="add-to-cart-btn btn mt-6 bg-slate-700 hover:bg-slate-800 text-white w-full rounded-full" type="submit" name="add-to-cart">Add to cart</button>
+        </form>
     </div>
     <hr class="my-10">
     <!-- Product Description -->
@@ -79,3 +78,18 @@
         </div>
     </div>
 </div>
+
+
+<script>
+    function handlerChangeInput() {
+        const selectedInput = document.querySelector('input[name=variant_id]:checked').value;
+        const variants = JSON.parse(JSON.stringify(<?php echo $variantDataJson ?>));
+        const currentVariant = variants.find(variant => variant.variant_id === selectedInput);
+        if (Number(currentVariant.quantity) > 0) {
+            document.querySelector('.product-quantity').innerText = currentVariant.quantity;
+        } else {
+            document.querySelector('.product-quantity-wrapper').innerHTML = `<p class="text-red-700">Out Stock <i class="bi bi-emoji-expressionless"></i></p>`
+            document.querySelector('.add-to-cart-btn').classList.add('btn-disabled');
+        }
+    }
+</script>
