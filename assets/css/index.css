@@ -43,3 +43,6 @@ h3 {
     margin: 20px 0 20px 25px;
     list-style: disc;
 }
+option {
+    font-size: 13px;
+}
