@@ -9,6 +9,8 @@ include './model/billboards.php';
 include './model/categories.php';
 include './model/products.php';
 include './model/variants.php';
+include './model/shipping-types.php';
+include './model/orders.php';
 include './model/brands.php';
 include './model/users.php';
 ?>
@@ -157,8 +159,80 @@ include './model/users.php';
                             break;
 
                         case 'checkout':
+                            if (!$_SESSION['user']) {
+                                header('location: index.php?act=login');
+                            }
+                            $carts = $_SESSION['carts'];
+                            $shippingTypes = getall_shippingTypes();
+                            $paymentMethods = getPayment_method();
 
+                            if (isset($_POST['place-order'])) {
+                                $error = array();
+                                $user_id = $_POST['user_id'];
+                                $username = $_POST['name'];
+                                $email = $_POST['email'];
+                                $phone = $_POST['phone'];
+                                $order_note = $_POST['order-note'];
+                                $createdAt = date("h:i:sa d/m/Y");
+                                $totalAmount = $_POST['total-price'];
+                                $address = $_POST['address'];
+                                $shipingType = $_POST['shipping_type'];
+                                $payment_method = $_POST['payment_method'];
+                                $payment_status = "Processing";
+                                $order_status = 'Processing';
+
+                                if (empty($username)) {
+                                    $error['name'] = "Username is required";
+                                }
+                                if (empty($email)) {
+                                    $error['email'] = "Email is required";
+                                }
+                                if (empty($phone)) {
+                                    $error['phone'] = "Phone is required";
+                                }
+                                if (empty($address)) {
+                                    $error['address'] = "Address is required";
+                                }
+
+                                if (empty($error)) {
+                                    // insert order to database
+                                    $conn = insert_order($username, $email, $phone, $order_note, $createdAt, $totalAmount, $address, $shipingType, $payment_method, $payment_status, $order_status, $user_id);
+                                    $order_id = $conn->lastInsertId();
+                                    if ($order_id) {
+                                        foreach ($_SESSION['carts'] as $key => $cart) {
+                                            $variant_id = $cart['variant_id'];
+                                            $quantity = $cart['quantity'];
+                                            $product_id = $cart['product_id'];
+                                            $price_per_unit = $cart['price'];
+                                            $product_name =   $cart['name'] . " " . $cart['variant_name'];
+                                            $image = $cart['image_url'];
+                                            insert_order_details($variant_id, $product_id, $product_name, $image,  $quantity, $price_per_unit, $order_id);
+                                        }
+                                        $_SESSION['carts'] = [];
+                                        if ($payment_method === 'online payment') {
+                                            header("location: index.php?act=online-payment&order_id=$order_id");
+                                        }
+                                        if ($payment_method === 'payment on delivery') {
+                                            header("location: index.php?act=order-completed&order_id=$order_id");
+                                        }
+                                    }
+                                }
+                            }
                             include('./view/checkout.php');
+                            break;
+                        case 'online-payment':
+                            include('./view/vnpay/online-payment.php');
+                            break;
+                        case 'online-payment-result':
+                            include('./view/vnpay/online-payment-result.php');
+                            break;
+                        case 'order-completed':
+                            if (isset($_GET['order_id'])) {
+                                $order_id = $_GET['order_id'];
+                                $order = getone_order($order_id);
+                                $orderDetails = getall_order_details_by_orderId($order_id);
+                            }
+                            include('./view/order-completed.php');
                             break;
                         case 'shop':
                             $keyword = "";
@@ -187,7 +261,7 @@ include './model/users.php';
                             if (isset($_GET['product_id'])) {
                                 $product_id = $_GET['product_id'];
                                 $product = getone_product_client($product_id);
-                                $variants = get_variant_by_productId($product_id);
+                                $variants = getall_variant_by_productId($product_id);
                                 $variantDataJson = json_encode($variants);
                                 extract($product);
                                 $image_urls = explode(',', $image_urls);

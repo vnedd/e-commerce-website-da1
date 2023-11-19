@@ -50,7 +50,7 @@
                 <?php
                 foreach ($feature_products as $product) {
                     extract($product);
-                    $variants = get_variant_by_productId($product_id);
+                    $variants = getall_variant_by_productId($product_id);
                     $productJson = json_encode($product);
                     $variantJson = json_encode($variants);
                     $image_urls = explode(',', $image_urls);
