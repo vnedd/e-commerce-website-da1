@@ -83,3 +83,5 @@ if (swiperProduct) {
 }
 
 // end handler swipper
+
+/// handle change product variant client side

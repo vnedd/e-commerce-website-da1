@@ -11,6 +11,7 @@ include '../model/brands.php';
 include '../model/categories.php';
 include '../model/products.php';
 include '../model/variants.php';
+include '../model/orders.php';
 include '../model/images.php';
 include '../model/users.php';
 include '../model/roles.php';
@@ -38,7 +39,7 @@ include '../model/roles.php';
     <div class="w-full overflow-x-hidden">
         <div class="w-full flex items-center">
             <?php include('./sidebar.php') ?>
-            <div class="flex-1 min-h-screen h-full lg:ml-[260px] ml-[80px] p-5">
+            <div class="flex-1 min-h-screen h-full lg:ml-[260px] ml-[80px] p-5 scrollbar-hide ">
                 <?php
                 if (isset($_GET['act'])) {
                     $act = $_GET['act'];
@@ -376,7 +377,7 @@ include '../model/roles.php';
                                 $product_id = $_GET['product_id'];
                                 $current_pd = getone_product($product_id);
                                 $product_images = getall_image_by_productId($product_id);
-                                $variants = get_variant_by_productId($product_id);
+                                $variants = getall_variant_by_productId($product_id);
 
                                 if (isset($_POST['update_product'])) {
                                     $error = array();
@@ -583,6 +584,33 @@ include '../model/roles.php';
                                 header("Location:index.php?act=list_user");
                             }
                             break;
+                        case 'list_order':
+                            include('./orders/list.php');
+                            break;
+                        case 'update_order':
+                            if (isset($_GET['order_id'])) {
+                                $order_id = $_GET['order_id'];
+                                $order = getone_order($order_id);
+                                $order_details = getall_order_details_by_orderId($order_id);
+                                $order_statuss = get_OrderStatus();
+
+                                if (isset($_POST['update_order'])) {
+                                    $status = $_POST['order_status'];
+                                    if ($status === 'Delivered') {
+                                        update_PaymentStatus($order_id, 'Succeeded');
+                                        foreach ($order_details as $order_detail) {
+                                            extract($order_detail);
+                                            descrease_quantity_when_order_delivered($variant_id, $quantity);
+                                        }
+                                    }
+                                    if ($status === 'Cancelled') {
+                                        update_PaymentStatus($order_id, 'Return');
+                                    }
+                                    update_OrderStatus($order_id, $status);
+                                    header('location: index.php?act=list_order');
+                                }
+                            }
+                            include('./orders/update.php');
                         default:
                             include 'dashboard.php';
                             break;

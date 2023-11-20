@@ -25,14 +25,14 @@
                         extract($product);
                         $variants = getall_variant_by_productId($product_id);
                         $productJson = json_encode($product);
-                        $variantJson = json_encode($variants);
+                        $variantDataJson = json_encode($variants);
                         $image_urls = explode(',', $image_urls);
                     ?>
                         <div>
                             <div class="relative">
                                 <div class="relative group overflow-hidden w-full">
                                     <img class="w-full rounded-lg h-[320px] object-cover" src="./<?php echo $image_path . $image_urls[0] ?>" alt="">
-                                    <div onclick="openModal(<?php echo htmlspecialchars($productJson) ?>,<?php echo htmlspecialchars($variantJson) ?> )" class="absolute btn btn-circle btn-outline bg-white border-0 shadow-md rounded-full bottom-5 left-[50%] -translate-x-[50%] translate-y-28 group-hover:translate-y-0  transition">
+                                    <div onclick="openModal(<?php echo htmlspecialchars($productJson) ?>,<?php echo htmlspecialchars($variantDataJson) ?> )" class="absolute btn btn-circle btn-outline bg-white border-0 shadow-md rounded-full bottom-5 left-[50%] -translate-x-[50%] translate-y-28 group-hover:translate-y-0  transition">
                                         <i class="bi bi-arrows-angle-expand text-xl"></i>
                                     </div>
                                 </div>
@@ -88,3 +88,20 @@
     </div>
 </div>
 </div>
+<!-- <script>
+    function handlerChangeInput() {
+        const selectedInput = document.querySelector('input[name=variant_id]:checked').value;
+        const variants = JSON.parse(JSON.stringify(<?php echo $variantDataJson ?>));
+        const currentVariant = variants.find(variant => variant.variant_id === selectedInput);
+        if (Number(currentVariant.quantity) > 0) {
+            document.querySelector('.product-quantity-wrapper').innerHTML = `
+            <p class="product-quantity text-violet-700 mr-2">${currentVariant.quantity}</p>
+                <p class="text-violet-700">In Stock <i class="bi bi-check"></i></p>
+            `;
+            document.querySelector('.add-to-cart-btn').classList.remove('btn-disabled');
+        } else {
+            document.querySelector('.product-quantity-wrapper').innerHTML = `<p class="text-red-700">Out Stock <i class="bi bi-emoji-expressionless"></i></p>`
+            document.querySelector('.add-to-cart-btn').classList.add('btn-disabled');
+        }
+    }
+</script> -->

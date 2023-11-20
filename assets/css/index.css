@@ -46,3 +46,8 @@ h3 {
 option {
     font-size: 13px;
 }
+
+.tab-active {
+    background-color: rgb(51 65 85);
+    color: white;
+}

@@ -104,6 +104,64 @@ include './model/users.php';
                         case "profile":
                             if (isset($_GET['user_id']) && isset($_SESSION['user'])) {
                                 $user = $_SESSION['user'];
+                                $user_id = $user['user_id'];
+                                $arrayAddress = array();
+                                $orders = getall_order_by_userId($user_id);
+                                if (!empty($user['address'])) {
+                                    $arrayAddress = explode(',', $user['address']);
+                                }
+
+                                if (isset($_POST['update_user'])) {
+                                    $error = array();
+                                    $name = $_POST['name'];
+                                    $email = $_POST['email'];
+                                    $password = $_POST['password'];
+                                    $phone = $_POST['phone'];
+                                    $city = $_POST['city'];
+                                    $district = $_POST['district'];
+                                    $ward = $_POST['ward'];
+
+                                    if (empty($name)) {
+                                        $error['name'] = "Name is required!";
+                                    }
+                                    if (empty($email)) {
+                                        $error['email'] = "Email is required!";
+                                    }
+                                    if (empty($password)) {
+                                        $error['password'] = "Password is required!";
+                                    }
+                                    if (empty($city)) {
+                                        $error['city'] = "City is required!";
+                                    }
+                                    if (empty($district)) {
+                                        $error['district'] = "District is required!";
+                                    }
+                                    if (empty($ward)) {
+                                        $error['ward'] = "Ward is required!";
+                                    }
+
+
+                                    if (empty($_FILES['image_url']['name'])) {
+                                        $image_url = $user['image_url'];
+                                    } else {
+                                        $targetDir = './upload/';
+                                        $newFileName = uniqid() . $_FILES['image_url']['name'];
+                                        $targetFile = $targetDir . $newFileName;
+                                        if (move_uploaded_file($_FILES['image_url']['tmp_name'], $targetFile)) {
+                                            $image_url = $newFileName;
+                                        } else {
+                                            $error['image_url'] = "Some thing went wrong!!";
+                                        }
+                                    }
+
+                                    if (empty($error)) {
+                                        $address = $city . "," . $district . "," . $ward;
+                                        update_user($user_id, $name, $email, $password, $phone, $address, $image_url, 2);
+                                        $newUser = getone_user($user_id);
+                                        $_SESSION['user'] = $newUser;
+                                        header("location: index.php?act=profile&user_id=$user_id");
+                                    }
+                                }
                             }
                             include('./view/auth/profile.php');
                             break;
@@ -230,9 +288,17 @@ include './model/users.php';
                             if (isset($_GET['order_id'])) {
                                 $order_id = $_GET['order_id'];
                                 $order = getone_order($order_id);
-                                $orderDetails = getall_order_details_by_orderId($order_id);
+                                $order_details = getall_order_details_by_orderId($order_id);
                             }
                             include('./view/order-completed.php');
+                            break;
+                        case 'cancel_order':
+                            if (isset($_GET['order_id'])) {
+                                $order_id = $_GET['order_id'];
+                                update_OrderStatus($order_id, "Cancelled");
+                                update_PaymentStatus($order_id, "Return");
+                                header('location: index.php?act=shop');
+                            }
                             break;
                         case 'shop':
                             $keyword = "";
