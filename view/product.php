@@ -85,8 +85,13 @@
         const selectedInput = document.querySelector('input[name=variant_id]:checked').value;
         const variants = JSON.parse(JSON.stringify(<?php echo $variantDataJson ?>));
         const currentVariant = variants.find(variant => variant.variant_id === selectedInput);
+        console.log(currentVariant)
         if (Number(currentVariant.quantity) > 0) {
-            document.querySelector('.product-quantity').innerText = currentVariant.quantity;
+            document.querySelector('.product-quantity-wrapper').innerHTML = `
+            <p class="product-quantity text-violet-700 mr-2">${currentVariant.quantity}</p>
+                <p class="text-violet-700">In Stock <i class="bi bi-check"></i></p>
+            `;
+            document.querySelector('.add-to-cart-btn').classList.remove('btn-disabled');
         } else {
             document.querySelector('.product-quantity-wrapper').innerHTML = `<p class="text-red-700">Out Stock <i class="bi bi-emoji-expressionless"></i></p>`
             document.querySelector('.add-to-cart-btn').classList.add('btn-disabled');

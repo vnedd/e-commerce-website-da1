@@ -11,6 +11,10 @@
                 <h1 id="modal__product-name" class="text-gray-800 font-medium text-md my-4">Product Name</h1>
                 <form id="add-to-cart-form" class="mt-6" action="index.php?act=addtocart" method="post">
                     <div id="modal__product-variant"></div>
+                    <div class="product-quantity-wrapper flex items-center space-x-1 text-sm">
+                        <p class="product-quantity text-violet-700 mr-2"><?php echo $variants[0]['quantity'] ?></p>
+                        <p class="text-violet-700">In Stock <i class="bi bi-check"></i></p>
+                    </div>
                     <div>
                         <p class="font-semibold mb-4">Quantity:</p>
                         <div class="flex items-center space-x-2">
@@ -19,7 +23,7 @@
                             <span class="inscrease-cart-qty btn btn-square btn-sm rounded-full btn-outline cursor-pointer font-bold text-xl">+</span>
                         </div>
                     </div>
-                    <button class="btn bg-slate-700 hover:bg-slate-800 text-white w-full rounded-full mt-6" type="submit" name="add-to-cart">Add to cart</button>
+                    <button class="add-to-cart-btn btn bg-slate-700 hover:bg-slate-800 text-white w-full rounded-full mt-6" type="submit" name="add-to-cart">Add to cart</button>
                 </form>
             </div>
         </div>
