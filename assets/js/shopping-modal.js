@@ -23,8 +23,6 @@ function openModal(product, variants) {
     document.getElementById('modalOverlay').style.display = 'flex';
     document.getElementById('modal__product-name').innerText = product.name;
 
-    console.log(variants);
-
     const renderVariant = variants
         .map((variant, index) => {
             return `
