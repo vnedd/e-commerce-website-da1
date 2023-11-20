@@ -68,12 +68,13 @@ function openModal(product, variants) {
     `;
     document.getElementById('add-to-cart-form').prepend(divElm);
 }
+
 function handlerChangeInput(variants) {
     const selectedInput = document.querySelector(
         'input[name=variant_id]:checked',
     ).value;
     const currentVariant = variants.find(
-        (variant) => variant.variant_id === selectedInput,
+        (variant) => variant.variant_id == selectedInput,
     );
     if (Number(currentVariant.quantity) > 0) {
         document.querySelector('.product-quantity-wrapper').innerHTML = `

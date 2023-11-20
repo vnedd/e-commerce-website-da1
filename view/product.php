@@ -23,7 +23,7 @@
                         $discountPrice = floatval($variant['price']) - (floatval($variant['price']) * floatval($discount)) / 100;
                     ?>
                         <label for="variant_<?php echo $variant['variant_id'] ?>" class="flex p-3 w-full cursor-pointer bg-white border border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400">
-                            <input type="radio" <?php echo $key === 0 ? "checked" : "" ?> onchange="handlerChangeInput()" name="variant_id" value="<?php echo $variant['variant_id'] ?>" id="variant_<?php echo $variant['variant_id'] ?>" class=" shrink-0 mt-0.5 border-gray-200 rounded-full text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800">
+                            <input type="radio" <?php echo $key === 0 ? "checked" : "" ?> onchange="handlerChangeInput(<?php echo htmlspecialchars($variantDataJson) ?>)" name="variant_id" value="<?php echo $variant['variant_id'] ?>" id="variant_<?php echo $variant['variant_id'] ?>" class=" shrink-0 mt-0.5 border-gray-200 rounded-full text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800">
                             <div class="text-sm text-gray-500 ms-3 dark:text-gray-400">
                                 <p class="text-sm"><?php echo $variant['variant_name'] ?></p>
                                 <p class="text-sm font-bold mt-4"><span class="text-neutral-300 line-through text-xs mr-2">$<?php echo $variant['price'] ?></span>$<?php echo $discountPrice ?></p>
@@ -77,15 +77,19 @@
             <?php echo $description ?>
         </div>
     </div>
+    <?php
+    include('./view/comment.php');    
+    ?>
 </div>
 
 
 <script>
-    function handlerChangeInput() {
+    function handlerChangeInput(variants) {
         const selectedInput = document.querySelector('input[name=variant_id]:checked').value;
-        const variants = JSON.parse(JSON.stringify(<?php echo $variantDataJson ?>));
-        const currentVariant = variants.find(variant => variant.variant_id === selectedInput);
-        console.log(currentVariant)
+
+        const currentVariant = variants.find(variant => variant.variant_id == selectedInput);
+
+
         if (Number(currentVariant.quantity) > 0) {
             document.querySelector('.product-quantity-wrapper').innerHTML = `
             <p class="product-quantity text-violet-700 mr-2">${currentVariant.quantity}</p>

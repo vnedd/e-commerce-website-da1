@@ -23,6 +23,9 @@ include './model/users.php';
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dự án 1</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.0.7/dist/full.min.css" rel="stylesheet" type="text/css" />
     <link href="https://unpkg.com/@tailwindcss/forms@0.2.1/dist/forms.min.css" rel="stylesheet">
@@ -101,6 +104,7 @@ include './model/users.php';
                             unset($_SESSION['user']);
                             header('location: index.php?act=login');
                             break;
+
                         case "profile":
                             if (isset($_GET['user_id']) && isset($_SESSION['user'])) {
                                 $user = $_SESSION['user'];
@@ -163,6 +167,7 @@ include './model/users.php';
                                     }
                                 }
                             }
+                    
                             include('./view/auth/profile.php');
                             break;
                         case 'view-cart':
@@ -336,8 +341,11 @@ include './model/users.php';
                                 header('location: index.php');
                             }
                             break;
-
-                        default:
+                            case 'insert-cmt':
+                                
+                                include('./view/comment.php');
+                                 break;
+                        default: 
                             $billboards = getall_billboard();
                             $categories = getall_category();
                             $feature_products = get_feature_product();
@@ -357,6 +365,12 @@ include './model/users.php';
         include './view/footer.php';
         ?>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
     <script src="./assets/js/index.js"></script>
     <script src="./assets/js/shopping-modal.js"></script>

@@ -11,6 +11,7 @@
             <input class=" btn mt-3 bg-black text-light mx-auto d-block " type="submit" value="Xác Nhận" name="confirm">
             <?php
             if (isset($sendMail) && $sendMail != "") {
+                
                 echo $sendMail;
             }
             ?>
