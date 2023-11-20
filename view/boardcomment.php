@@ -1,11 +1,29 @@
+<?php
+     if (isset($_SESSION['users'])) {
+     $logError = "You aren't  login yet  ";
+   }
+
+      if(isset($_GET['insert_cmt'])){
+     $error = array();
+     $content = $_POST['insert_content'];
+  
+   
+      }
+      
+       break;
+
+?>
+
+
 <div class="row d-flex justify-content-center w-full mt-5">
   <div class="col-md-8 col-lg-12">
     <div class="card shadow-0 border" style="background-color: #f0f2f5;">
       <div class="card-body p-4">
-        <div class="form-outline mb-4">
-          <input type="text" id="addANote" class="form-control" placeholder="Type comment..." />
+        <form class="form-outline mb-4" action="index.php?act=" method="post">
+          <input type="text" id="addANote" class="form-control" placeholder="Type comment..." name="insert_content" />
+          <input type="submit" id="addANote" class="form-control" value="Post Comment" name="insert_cmt" />
           <label class="form-label" for="addANote">+ Add a note</label>
-        </div>
+        </form>
 
         <div class="card mb-4">
           <div class="card-body">
@@ -18,7 +36,7 @@
                 <p class="small mb-0 ms-2">Martha</p>
               </div>
               <div class="d-flex flex-row align-items-center">
-                <p class="small text-muted mb-0">Upvote?</p>
+                <p class="small text-muted mb-0">Respond</p>
                 <i class="far fa-thumbs-up mx-2 fa-xs text-black" style="margin-top: -0.16rem;"></i>
                 <p class="small text-muted mb-0">3</p>
               </div>

@@ -433,11 +433,12 @@ include '../model/roles.php';
                                 header("Location:index.php?act=list_product");
                             }
                             break;
-                        case 'list_user':
-                            $list_user = getall_user();
-                            include('./users/list.php');
-                            break;
-                        case 'add_user':
+                            case 'list_user':
+                                $list_user = getall_user();
+                                include('./users/list.php');
+                                break;
+                        
+                            case 'add_user':
                             $roles = getall_role();
                             if (isset($_POST['add_user'])) {
                                 $error = array();
@@ -538,7 +539,7 @@ include '../model/roles.php';
 
 
                                     if (empty($_FILES['image_url']['name'])) {
-                                        $image_url = $current_user['image_url'];
+                                        $image_url = $current_user['image_url'];    
                                     } else {
                                         $targetDir = '../upload/';
                                         $newFileName = uniqid() . $_FILES['image_url']['name'];

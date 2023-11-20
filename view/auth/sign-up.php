@@ -1,10 +1,38 @@
 <?php
-session_start();
-include'./model/pdo.php';
-include'./model/users.php';
-if ($_SESSION['email']) {
-   header('location: index.php');
+
+
+// include'./model/users.php';
+if (isset($_SESSION['users'])) {
+    header('location: index.php');
+ }
+if (isset($_POST['sign-up'])) {
+  $error = array();
+  $email = $_POST['email'];
+  $password = $_POST['password'];
+  $name = $_POST['name'];
+
+  if (empty($name)) {
+    $error['name'] = "Please enter your user name ";
+  } 
+  if (!filter_var($email,FILTER_VALIDATE_EMAIL)) {
+    $error['email'] =  "Invalid email address";
+  } 
+  $user = isEmailRegistered($email);
+  if (is_array($user)) {
+    $error['email']="This Email is already exists";
+  }
+if (strlen($password) <6) {
+    $error['password'] ="Your password isn't strong enough ";
 }
+if (empty($error)) {
+    insert_user_signup($name,$email,$password);
+    header('location: index.php?act=login');
+}
+
+
+}
+
+
 
 
 ?>
@@ -22,8 +50,8 @@ if ($_SESSION['email']) {
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
                         Username
                     </label>
-                    <input class="form-input text-sm rounded-md w-full" id="email" name="email" type="text" placeholder="Ex: David">
-                    <?php echo !empty($error['email']) ? '<span class="text-red-500 text-sm">' . $error['email'] . '</span>' : ""  ?>
+                    <input class="form-input text-sm rounded-md w-full" id="name" name="name" type="text" placeholder="Ex: David">
+                    <?php echo !empty($error['name']) ? '<span class="text-red-500 text-sm">' . $error['name'] . '</span>' : ""  ?>
                 </div>
                 <div>
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
@@ -42,7 +70,7 @@ if ($_SESSION['email']) {
                     </div>
                     <?php echo !empty($error['password']) ? '<span class="text-red-500 text-sm">' . $error['password'] . '</span>' : ""  ?>
                 </div>
-                <button class="btn md:btn-md btn-sm capitalize bg-slate-700 hover:bg-slate-800 w-full text-white" type="submit" name="login">
+                <button class="btn md:btn-md btn-sm capitalize bg-slate-700 hover:bg-slate-800 w-full text-white" type="submit" name="sign-up">
                     Create account
                 </button>
                 <?php echo !empty($loginError) ? '<span class="text-red-500 text-sm">' . $loginError . '</span>' : ""  ?>

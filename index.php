@@ -10,6 +10,11 @@ include './model/billboards.php';
 include './model/categories.php';
 include './model/products.php';
 include './model/brands.php';
+include './model/comment.php';
+include './model/users.php';
+include './model/roles.php';
+
+
 ?>
 
 <!DOCTYPE html>
@@ -50,9 +55,81 @@ include './model/brands.php';
                             include('./view/auth/sign-up.php');
                             break;
                             case 'log-out':
-                            unset($_SESSION['Blazes']);
-                            header('location: login.php');
+                            unset($_SESSION['users']);
+                            header('location: index.php');
                             break;
+                            case "profile":
+                                if (isset($_GET['user_id']) && isset($_SESSION['user'])) {
+                                    $user_id = $_GET['user_id'];
+                                    $_SESSION['profile_user_id'] = $user_id;
+                                 
+                                }
+                                include('./view/auth/list.php');
+                                break;
+                                case "update-profile":
+                                    if (isset($_GET['user_id'])) {
+                                        $user_id = $_GET['user_id'];
+                                        $current_user = getone_user($user_id);
+                                        $roles = getall_role();
+                                        $arrayAddress = explode(',', $current_user['address']);
+                                        if (isset($_POST['update_user'])) {
+                                            $error = array();
+                                            $name = $_POST['name'];
+                                            $email = $_POST['email'];
+                                            $password = $_POST['password'];
+                                            $phone = $_POST['phone'];
+                                            $city = $_POST['city'];
+                                            $district = $_POST['district'];
+                                            $ward = $_POST['ward'];
+                                            $role_id = $_POST['role_id'];
+        
+        
+                                            if (empty($name)) {
+                                                $error['name'] = "Name is required!";
+                                            }
+                                            if (empty($email)) {
+                                                $error['email'] = "Email is required!";
+                                            }
+                                            if (empty($password)) {
+                                                $error['password'] = "Password is required!";
+                                            }
+                                            if (empty($city)) {
+                                                $error['city'] = "City is required!";
+                                            }
+                                            if (empty($district)) {
+                                                $error['district'] = "District is required!";
+                                            }
+                                            if (empty($ward)) {
+                                                $error['ward'] = "Ward is required!";
+                                            }
+                                            if (empty($role_id)) {
+                                                $error['role_id'] = "Role is required!";
+                                            }
+        
+        
+                                            if (empty($_FILES['image_url']['name'])) {
+                                                $image_url = $current_user['image_url'];    
+                                            } else {
+                                                $targetDir = '../upload/';
+                                                $newFileName = uniqid() . $_FILES['image_url']['name'];
+                                                $targetFile = $targetDir . $newFileName;
+        
+                                                if (move_uploaded_file($_FILES['image_url']['tmp_name'], $targetFile)) {
+                                                    $image_url = $newFileName;
+                                                } else {
+                                                    $error['image_url'] = "Some thing went wrong!!";
+                                                }
+                                            }
+        
+                                            if (empty($error)) {
+                                                $address = $city . "," . $district . "," . $ward;
+                                                update_user($current_user["user_id"], $name, $email, $password, $phone, $address, $image_url, $role_id);
+                                                header('location: index.php?act=list_user');
+                                            }
+                                        }
+                                        include('view/auth/update.php');
+                                    }
+                                    break;
                         case 'view-cart':
                             $carts = $_SESSION['carts'];
                             include('./view/cart/view-cart.php');
@@ -77,6 +154,7 @@ include './model/brands.php';
                                 header('location: index.php?act=view-cart');
                             }
                             break;
+                          
                         case 'update-cart':
                             $carts = $_SESSION['carts'];
                             if (isset($_POST['update-cart'])) {
@@ -136,6 +214,17 @@ include './model/brands.php';
                                 header('location: index.php');
                             }
                             break;
+                            case 'list_user':
+                                $user_id = $_SESSION['users']['user_id'];
+                                $list_user = getall_user($user_id);
+                           
+                             
+                        
+                                  
+                                include('view/auth/list.php');
+                                break;
+
+       
                         default:
                             $billboards = getall_billboard();
                             $categories = getall_category();
@@ -143,6 +232,7 @@ include './model/brands.php';
                             include './view/home.php';
                             break;
                     }
+
                 } else {
                     $billboards = getall_billboard();
                     $categories = getall_category();

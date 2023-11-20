@@ -22,7 +22,7 @@ if (isset($_POST['login'])) {
   $user = checklogin_client($email,$password);
   if (is_array($user)) {
   
-       $user_session_data = array(git
+       $user_session_data = array(
         'user_id' => $user['user_id'],
         'name' => $user['name'],
         'email' => $user['email'],

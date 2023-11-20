@@ -1,3 +1,9 @@
+<?php
+if (isset($_GET['act'])) {
+    $act = $_GET['act'];
+}
+?>
+
 <div class=" bg-white shadow-lg px-7 py-2 fixed top-0 left-0 right-0 h-[90px] z-50">
     <div class=" flex items-center h-full mx-auto">
         <div class="flex items-center space-x-3 lg:pr-16 pr-6">
@@ -23,9 +29,13 @@
             <button class="btn btn-circle outline-none border-0 bg-transparent hover:bg-slate-200 btn-md"><i class="bi bi-search text-lg"></i></button>
             <div class="indicator">
                 <span class="indicator-item badge p-2 py-3 bg-slate-800 text-white mt-2 mr-2"><?php echo isset($_SESSION['carts']) ? count($_SESSION['carts']) : 0 ?></span>
-                <button class="btn btn-circle outline-none border-0 bg-transparent hover:bg-slate-200 btn-md">
-                    <a href="index.php?act=view-cart"><i class="bi bi-basket text-xl"></i></a>
-                </button>
+                <button class="dropbtn btn btn-circle outline-none border-0 bg-transparent hover:bg-slate-200 btn-md">
+                    <a href="index.php?act=view-cart" class="dropdown-toggle" ><i class="bi bi-basket text-xl"></i>
+                 
+                    </a>
+               </button>
+              
+                
             </div>
             <div class="dropdown dropdown-end">
                 <label tabindex="0" class="flex items-center justify-between space-x-4 border border-slate-400 px-4 py-2 cursor-pointer rounded-full"> <i class="bi bi-person"></i> <i class="bi bi-caret-down-fill"></i></label>
@@ -33,6 +43,7 @@
                     <li><a href="index.php?act=login">Login</a></li>
                     <li><a href="index.php?act=sign-up">Sign up</a></li>
                     <li><a href="index.php?act=log-out">Log out</a></li>
+                    <li><a href="index.php?act=profile">Profile</a></li>
                 </ul>
             </div>
         </div>

@@ -79,6 +79,6 @@
         </div>
     </div>
      <?php 
-      include('./view/comment.php');
+      include('./view/boardcomment.php');
      ?>
 </div>
