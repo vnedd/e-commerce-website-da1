@@ -15,7 +15,7 @@ include '../model/orders.php';
 include '../model/images.php';
 include '../model/users.php';
 include '../model/roles.php';
-
+include '../model/posts.php';
 ?>
 
 <!DOCTYPE html>
@@ -611,6 +611,80 @@ include '../model/roles.php';
                                 }
                             }
                             include('./orders/update.php');
+                            case 'add_post':
+                            // $user = getall_user();
+                            if (isset($_POST['add_posts']) ) {
+                                $error = array();
+                                $title = $_POST['title'];
+                                $subtitle = $_POST['subtitle'];
+                                $content = $_POST['content'];
+                                
+                                $created_at = date('Y-m-d');
+                                // $user_id = $_POST['user_id'];
+                             if (empty($title)) {
+                                $error['title']='You must enter the title';
+                             }
+                             if (empty($subtitle)) {
+                                $error['subtitle']='You must enter the subtitle';
+                             }
+                             if (empty($content)) {
+                                $error['content']='You must enter the content';
+                             }
+                             if (empty($error)) {
+                             $insert = insert_posts($title,$subtitle,$content,$created_at);
+                             }
+                             header('location: index.php?act=list_post');
+                            }
+                                include('./posts/add.php');
+                                break;
+                            
+                            case 'list_post':
+                              $list_post = getall_posts();
+                                include('./posts/list.php');
+                                break;
+                                case 'update_post':
+                                    if (isset($_GET['post_id'])) {
+                                        $post_id = $_GET['post_id'];
+                                        $posts = getone_post($post_id);
+                                        if (isset($_POST['update_post'])) {
+                                            $error = array();
+                                            $title = $_POST['title'];
+                                            $subtitle = $_POST['subtitle'];
+                                            $content = $_POST['content'];
+                                            $created_at = $_POST['created_at'];
+                                            $user_id = $_POST['user_id'];
+                                            if (empty($title)) {
+                                                $error['title'] = "Please enter title!";
+                                            }
+                                            if (empty($subtitle)) {
+                                                $error['subtitle'] = "Please enter subtitle!";
+                                            }
+                                            if (empty($content)) {
+                                                $error['content'] = "Please enter content!";
+                                            }
+                                            if (empty($created_at)) {
+                                                $error['created_at'] = "Please enter created_at!";
+                                            }
+                                            if (empty($user_id)) {
+                                                $error['user_id'] = "Please enter user_id!";
+                                            }
+                                            
+        
+                                            if (empty($error)) {
+                                                update_posts($title, $subtitle, $content,$created_at,$user_id,$post_id);
+                                                header('location: index.php?act=list_post');
+                                            }
+                                        }
+                                    }
+                                    include('./posts/update.php');
+                                    case 'delete_post':
+                                        if ($_GET['post_id']) {
+                                        $post_id = $_GET['post_id'];
+                                        delete_post($_GET['post_id']);
+                                        header('location: index.php?act=list_post');
+                                        }
+                                        break;
+                        
                         default:
                             include 'dashboard.php';
                             break;

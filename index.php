@@ -345,6 +345,11 @@ include './model/users.php';
                                 
                                 include('./view/comment.php');
                                  break;
+
+                        case 'post':
+                           include('view/post.php');
+                           
+                            break;     
                         default: 
                             $billboards = getall_billboard();
                             $categories = getall_category();
