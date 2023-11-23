@@ -449,6 +449,15 @@ include '../model/posts.php';
                             break;
                         case 'list_user':
                             $list_user = getall_user();
+                            $keyword = "";
+                            $user_id = "";
+                            $role_id = "";
+                            if (isset($_POST['filter'])) {
+                               $keyword = $_POST['keyword'];
+                            
+                               $user = getall_user_lk_fk($keyword);
+                            }
+                           
                             include('./users/list.php');
                             break;
                         case 'add_user':
@@ -611,9 +620,11 @@ include '../model/posts.php';
                                 }
                             }
                             include('./orders/update.php');
-                            case 'add_post':
+                            break;
+                        case 'add_post':
                             // $user = getall_user();
                             if (isset($_POST['add_posts']) ) {
+                             
                                 $error = array();
                                 $title = $_POST['title'];
                                 $subtitle = $_POST['subtitle'];
@@ -630,16 +641,31 @@ include '../model/posts.php';
                              if (empty($content)) {
                                 $error['content']='You must enter the content';
                              }
-                             if (empty($error)) {
-                             $insert = insert_posts($title,$subtitle,$content,$created_at);
+                             if (empty($_FILES['image_url']['name'])) {
+                                $error['image_url'] = "Image is required!";
+                             } else{
+                                $targetDir = '../upload/';
+                                $newFileName = uniqid() . $_FILES['image_url']['name'];
+                                $targetFile = $targetDir . $newFileName;
+                                if (move_uploaded_file($_FILES['image_url']['tmp_name'], $targetFile)) {
+                                    $image_url = $newFileName;
+                                } else {
+                                    $error['image_url'] = "Some thing went wrong!!";
+                                }   
                              }
-                             header('location: index.php?act=list_post');
+                             if (empty($error)) {
+                             $insert = insert_posts($title,$image_url,$subtitle,$content,$created_at);
+                             }
+                             if ($insert) {
+                                header('location: index.php?act=list_post');
+                             }
                             }
                                 include('./posts/add.php');
                                 break;
                             
                             case 'list_post':
                               $list_post = getall_posts();
+
                                 include('./posts/list.php');
                                 break;
                                 case 'update_post':
@@ -671,10 +697,11 @@ include '../model/posts.php';
                                             
         
                                             if (empty($error)) {
-                                                update_posts($title, $subtitle, $content,$created_at,$user_id,$post_id);
+                                                update_posts($title,  $subtitle, $content,$created_at,$user_id,$post_id);
                                                 header('location: index.php?act=list_post');
                                             }
                                         }
+                                        break;
                                     }
                                     include('./posts/update.php');
                                     case 'delete_post':

@@ -52,3 +52,11 @@ function checklogin_client($email, $password)
     $user =  pdo_query_one($sql, $email, $password);
     return $user;
 }
+function getall_user_lk_fk($keyword){
+    $sql = "SELECT * FROM users where 
+    users.name like '%$keyword%' 
+    Group by users.name
+     ";
+     return pdo_query($sql);
+ 
+}

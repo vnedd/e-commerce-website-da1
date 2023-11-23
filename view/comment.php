@@ -2,12 +2,37 @@
   <div class="col-md-8 col-lg-12">
     <div class="card shadow-0 border" style="background-color: #f0f2f5;">
       <div class="card-body p-4">
-        <form class="form-outline mb-4" action="index.php?act=" method="post">
-          <input type="text" id="addANote" class="form-control" placeholder="Type comment..." name="insert_content" />
-          <input type="submit" id="addANote" class="form-control" value="Post Comment" name="insert_cmt" />
-          <label class="form-label" for="addANote">+ Add a note</label>
-        </form>
+        <?php 
+        
+        if (isset($_SESSION['user'])) {
+ 
+       ?>
+        <form class="form-outline mb-4" method="post" enctype="multipart/form-data">
+          <input type="text" id="content" class="form-control" placeholder="Type comment..." name="content" />
+          <?php echo !empty($error['content']) ? '<span class="text-red-500 text-xs">' . $error['content'] . '</span>' : ""  ?>
 
+          <input type="hidden" id="created_at" class="form-control"  name="created_at" />
+          <?php echo !empty($error['created_at']) ? '<span class="text-red-500 text-xs">' . $error['created_at'] . '</span>' : ""  ?>
+          
+          <input type="hidden" id="product_id" class="form-control" value=""  name="product_id" />
+          <?php echo !empty($error['product_id']) ? '<span class="text-red-500 text-xs">' . $error['product_id'] . '</span>' : ""  ?>
+
+          <input type="hidden" id="user_id" class="form-control"  name="user_id" />
+          <?php echo !empty($error['user_id']) ? '<span class="text-red-500 text-xs">' . $error['user_id'] . '</span>' : ""  ?>
+          
+          <input type="submit" id="insert_cmt" class="form-control" value="Post Comment" name="insert_cmt" />
+         
+          
+        </form>
+          <?php
+    } else {
+
+    ?>
+        <div class="w-full text-center py-10"><?php echo isset($_POST['comment_id']) ? "No account found !" : ' Create user now!' ?></div>
+    <?php
+    }
+    ?>
+    
         <div class="card mb-4">
           <div class="card-body">
             <p>Type your note, and hit enter to add it</p>

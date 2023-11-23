@@ -5,10 +5,12 @@ function getall_posts()
     return pdo_query($sql);
 }
 
-function insert_posts($title,$subtitle, $content,$created_at,$user_id=10)
+function insert_posts($title,$image_url="" , $subtitle, $content,$created_at,$user_id=10)
 {
-    $sql = "INSERT INTO posts (title, sub_title, content,created_at,user_id) VALUES (?,?,?,?,?)";
-    pdo_execute($sql, $title, $subtitle, $content,$created_at,$user_id);
+    $sql = "INSERT INTO posts (title,image_url, sub_title, content,created_at,user_id) VALUES (?,?,?,?,?,?)";
+  
+    return pdo_execute($sql, $title,$image_url, $subtitle, $content,$created_at,$user_id);
+
 }
 function getone_post($post_id)
 {

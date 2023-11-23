@@ -13,6 +13,7 @@ include './model/shipping-types.php';
 include './model/orders.php';
 include './model/brands.php';
 include './model/users.php';
+include './model/comment.php';
 ?>
 
 <!DOCTYPE html>
@@ -104,7 +105,31 @@ include './model/users.php';
                             unset($_SESSION['user']);
                             header('location: index.php?act=login');
                             break;
-
+                         
+                    //    case 'post_comment':
+                    //             if (isset($_POST['insert_cmt'])) {
+                    //             $error = array();
+                    //             $content = $_POST['content'];
+                    //             $created_at = date('Y-m-d');
+                    //             $product_id = $_POST['product_id'];
+                    //             $product = getone_product($product_id);
+                    //             $user = $_SESSION['user'];
+                    //             $user_id = $user['user_id'];
+                    //             if (empty($content)) {
+                    //                 $error['content'] = "Content is required!";
+                    //             }
+                    //             if (empty($product_id)) {
+                    //                 $error['product_id'] = "product_id is required!";
+                    //             }
+                    //             if (empty($user_id)) {
+                    //                 $error['user_id'] = "user_id is required!";
+                    //             }
+                    //             if (empty($error)) {
+                    //                 insert_comment($content, $created_at, $product_id, $user_id);
+                    //             } 
+                    //             }
+                    //             include('./view/comment.php');
+                    //             break;
                         case "profile":
                             if (isset($_GET['user_id']) && isset($_SESSION['user'])) {
                                 $user = $_SESSION['user'];
@@ -176,14 +201,20 @@ include './model/users.php';
                             break;
                         case 'addtocart':
                             if (isset($_POST['add-to-cart'])) {
+                                $error = array();
                                 $product_id = $_POST['product_id'];
                                 $name = $_POST['name'];
                                 $discount = $_POST['discount'];
                                 $image_url = $_POST['image_url'];
+                                $selected_quantity = $_POST['quantity'];
                                 $quantity = $_POST['quantity'];
                                 $variant_id = $_POST['variant_id'];
-
                                 $variant = getone_variant($variant_id);
+                             
+                                  if ($quantity> $variant['quantity']) {
+                                    $error['quantity']= 'You can not select more than quanlities on stock';
+                                 
+                                  } else{   
 
                                 if (is_array($variant)) {
                                     $dataCart = array(
@@ -199,6 +230,7 @@ include './model/users.php';
                                     $_SESSION['carts'][] = $dataCart;
                                     header('location: index.php?act=view-cart');
                                 }
+                            }
                             }
                             break;
                         case 'update-cart':
@@ -312,7 +344,6 @@ include './model/users.php';
                             $category_id = "";
                             $brand_id = "";
                             $brands = getall_brand();
-
                             $product_in_categorys = count_product_in_category();
                             if (isset($_POST['filter'])) {
                                 $minPrice = $_POST['min-price'];
@@ -349,7 +380,8 @@ include './model/users.php';
                         case 'post':
                            include('view/post.php');
                            
-                            break;     
+                            break;    
+                             
                         default: 
                             $billboards = getall_billboard();
                             $categories = getall_category();

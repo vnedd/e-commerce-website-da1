@@ -11,7 +11,7 @@
     </div>
     <div class="w-full mt-4">
         <form action="index.php?act=list_product" method="post" class="flex items-center space-x-2">
-            <input type="text" name="keyword" class="form-input rounded-lg" placeholder="Enter anything..">
+            <input type="text" name="keyword" class="form-input rounded-lg" placeholder="Enter name">
             <select class="px-4 py-[8px] lg:w-[190px] w-[100px] rounded-lg" name="category_id">
                 <option value="">--All category--</option>
                 <?php

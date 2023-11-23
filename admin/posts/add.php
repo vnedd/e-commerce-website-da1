@@ -7,8 +7,15 @@
     </div>
     <div class="mt-6">
         <form action="" method="post" enctype="multipart/form-data">
-            <div class="preview-image flex items-center space-x-4"> </div>
+        <div class="preview-image mt-2"></div>
+            <div class="preview-image mt-2"></div>
+            <div class="flex flex-col space-y-2 w-1/2 my-6">
+                <label class="font-semibold" for="image_url">Thumbnail</label>
+                <input class="image-upload p-2 bg-neutral-100 rounded-md cursor-pointer" id="image_url" name="image_url" type="file">
+                <?php echo !empty($error['image_url']) ? '<span class="text-red-500 text-sm">' . $error['image_url'] . '</span>' : ""  ?>
+            </div>
             <div class="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4">
+
                 <div class="flex flex-col space-y-2">
                     <label for="name" class="font-medium text-sm">Title</label>
                     <input type="text" class="form-input rounded text-slate-900" name="title" id="title" placeholder="Example: Iphone have amzing functions" />

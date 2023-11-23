@@ -63,8 +63,9 @@
             <div class="flex items-center space-x-3">
                 <p class="font-semibold">Quantity:</p>
                 <span class="descrease-cart-qty btn btn-square btn-sm rounded-full btn-outline cursor-pointer font-bold text-xl">-</span>
-                <input id="cart-qty-input" type="number" min=1 value="1" name="quantity" class="form-input w-[80px] ">
+                <input id="cart-qty-input" type="number" min=1  value="1" name="quantity" class="form-input w-[80px] ">
                 <span class="inscrease-cart-qty btn btn-square btn-sm rounded-full btn-outline cursor-pointer font-bold text-xl">+</span>
+                <?php echo !empty($error['quantity']) ? '<span class="text-red-500 text-xs">' . $error['quantity'] . '</span>' : ""  ?>
             </div>
             <button class="add-to-cart-btn btn mt-6 bg-slate-700 hover:bg-slate-800 text-white w-full rounded-full" type="submit" name="add-to-cart">Add to cart</button>
         </form>

@@ -47,6 +47,7 @@ function pdo_query_one($sql)
     try {
         $conn = pdo_get_connection();
         $stmt = $conn->prepare($sql);
+        var_dump($stmt);
         $stmt->execute($sql_args);
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         return $row;

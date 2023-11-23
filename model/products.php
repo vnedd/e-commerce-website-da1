@@ -2,16 +2,16 @@
 
 function getall_product($keyword, $category_id, $brand_id)
 {
-    $sql = "SELECT *  FROM products WHERE 1";
+    $sql = "SELECT * FROM products WHERE 1=1";
 
     if (!empty($keyword)) {
-        $sql .= ' and name like "%' . $keyword . '%"';
+        $sql .= " AND name LIKE '%" . $keyword . "%'";
     }
     if (!empty($category_id)) {
-        $sql .= " and category_id = '" . $category_id . "'";
+        $sql .= " AND category_id = '" . $category_id . "'";
     }
     if (!empty($brand_id)) {
-        $sql .= " and brand_id = '" . $brand_id . "'";
+        $sql .= " AND brand_id = '" . $brand_id . "'";
     }
     return pdo_query($sql);
 }
