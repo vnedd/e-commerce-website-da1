@@ -64,4 +64,10 @@
         xhr.open('GET', `orders/get_orders.php?order_status=${orderStatus}`, true);
         xhr.send();
     }
+    
+    $(document).ready(function() {
+    $(".order-tab").click(function() {
+        $(".tab-underline").css("left", $(this).position().left);
+    });
+});
 </script>

@@ -4,11 +4,12 @@
         <h4 class="font-semibold text-3xl">Users</h4>
         <p class="text-neutral-500 mt-1">List of the users</p>
     </div>
-    <form id="form-user-search" class="flex flex-col md:flex-row items-start md:items-center space-y-4 md:space-y-0 md:space-x-4" action="" method="post">
+    <form id="form-user-search" class="flex flex-col md:flex-row items-start md:items-center space-y-4 md:space-y-0 md:space-x-4" action="index.php?act=list_user" method="post">
         <div class="flex-grow">
             <label for="keyword" class="block text-xs">Find User</label>
             <div class="flex">
-                <input type="text" name="keyword" id="keyword" class="form-input rounded-lg w-full" placeholder="Enter anything...">
+                <input type="text" name="keyword" id="keyword" class="form-input rounded-lg w-50" placeholder=" Enter Name...">
+                <input type="email" name="email" id="email" class="form-input rounded-lg w-50" placeholder=" Enter Email...">
                 <button type="submit" name="filter" class="btn btn-sm rounded-full bg-slate-700 hover:bg-slate-800 text-white ml-2">
                     <i class="bi bi-search text-xl"></i>
                 </button>

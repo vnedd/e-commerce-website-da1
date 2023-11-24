@@ -139,7 +139,15 @@ include '../model/posts.php';
                             }
                             break;
                         case 'list_brand':
-                            $list_brand = getall_brand();
+                            $keyword = "";
+                            if (isset($_POST['filter_br'])) {
+                                $keyword = $_POST['keyword'];
+                            
+                            }else {
+                                $keyword = "";
+                            } 
+                            $list_brand = getall_brands($keyword);
+                                
                             include('./brands/list.php');
                             break;
                         case 'add_brand':
@@ -450,12 +458,12 @@ include '../model/posts.php';
                         case 'list_user':
                             $list_user = getall_user();
                             $keyword = "";
-                            $user_id = "";
+                            $email = "";
                             $role_id = "";
                             if (isset($_POST['filter'])) {
                                $keyword = $_POST['keyword'];
-                            
-                               $user = getall_user_lk_fk($keyword);
+                                $email = $_POST['email'];
+                               $user = getall_user_lk_fk($keyword,$email);
                             }
                            
                             include('./users/list.php');
