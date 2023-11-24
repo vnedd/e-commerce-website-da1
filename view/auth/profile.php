@@ -24,7 +24,7 @@
                         <div class="flex flex-col space-y-2">
                             <label for="email" class="font-semibold">Email</label>
                             <input type="email" class="form-input rounded text-slate-900" name="email" disabled id="email" value="<?php echo $user['email'] ?>" />
-                            <input type="email" class="form-input rounded text-slate-900" name="email" hidden id="email" value="<?php echo $user['email'] ?>" />
+                            <input type="email" class="form-input rounded text-slate-900" name="email" hidden value="<?php echo $user['email'] ?>" />
                             <?php echo !empty($error['email']) ? '<span class="text-red-500 text-sm">' . $error['email'] . '</span>' : ""  ?>
                         </div>
                         <div class="flex flex-col space-y-2">
@@ -185,28 +185,25 @@
             wardId = '0' + wardId;
         }
 
-        console.log(cityId)
-        console.log(districtId)
-        console.log(wardId)
 
         function renderCity(data) {
             for (const x of data) {
-                citis.options[citis.options.length] = new Option(x.Name, x.Id, x.Id === cityId, x.Id === cityId)
+                citis.options[citis.options.length] = new Option(x.Name, x.Id, x.Id == cityId, x.Id == cityId)
             }
 
             if (districtId && cityId) {
-                const result = data.filter(n => n.Id === cityId);
+                const result = data.filter(n => n.Id == cityId);
                 for (const k of result[0].Districts) {
-                    district.options[district.options.length] = new Option(k.Name, k.Id, k.Id === districtId, k.Id === districtId);
+                    district.options[district.options.length] = new Option(k.Name, k.Id, k.Id == districtId, k.Id == districtId);
                 }
             }
             if (wardId && districtId && cityId) {
-                const dataCity = data.filter((n) => n.Id === cityId);
+                const dataCity = data.filter((n) => n.Id == cityId);
                 console.log(dataCity)
-                const dataWards = dataCity[0].Districts.filter(n => n.Id === districtId)[0].Wards;
+                const dataWards = dataCity[0].Districts.filter(n => n.Id == districtId)[0].Wards;
                 console.log(dataWards)
                 for (const w of dataWards) {
-                    wards.options[wards.options.length] = new Option(w.Name, w.Id, w.Id === wardId, w.Id === wardId);
+                    wards.options[wards.options.length] = new Option(w.Name, w.Id, w.Id == wardId, w.Id == wardId);
                 }
             }
 
@@ -214,21 +211,21 @@
                 district.length = 1;
                 ward.length = 1;
                 if (this.value != "") {
-                    const result = data.filter(n => n.Id === this.value);
+                    const result = data.filter(n => n.Id == this.value);
 
                     for (const k of result[0].Districts) {
-                        district.options[district.options.length] = new Option(k.Name, k.Id, k.Id === districtId, k.Id === districtId);
+                        district.options[district.options.length] = new Option(k.Name, k.Id, k.Id == districtId, k.Id == districtId);
                     }
                 }
             };
             district.onchange = function() {
                 ward.length = 1;
-                const dataCity = data.filter((n) => n.Id === citis.value);
+                const dataCity = data.filter((n) => n.Id == citis.value);
                 if (this.value != "") {
-                    const dataWards = dataCity[0].Districts.filter(n => n.Id === this.value)[0].Wards;
+                    const dataWards = dataCity[0].Districts.filter(n => n.Id == this.value)[0].Wards;
 
                     for (const w of dataWards) {
-                        wards.options[wards.options.length] = new Option(w.Name, w.Id, w.Id === wardId, w.Id === wardId);
+                        wards.options[wards.options.length] = new Option(w.Name, w.Id, w.Id == wardId, w.Id == wardId);
                     }
                 }
             };
@@ -245,7 +242,7 @@
                 district.length = 1;
                 ward.length = 1;
                 if (this.value != "") {
-                    const result = data.filter(n => n.Id === this.value);
+                    const result = data.filter(n => n.Id == this.value);
 
                     for (const k of result[0].Districts) {
                         district.options[district.options.length] = new Option(k.Name, k.Id);
@@ -254,9 +251,9 @@
             };
             district.onchange = function() {
                 ward.length = 1;
-                const dataCity = data.filter((n) => n.Id === citis.value);
+                const dataCity = data.filter((n) => n.Id == citis.value);
                 if (this.value != "") {
-                    const dataWards = dataCity[0].Districts.filter(n => n.Id === this.value)[0].Wards;
+                    const dataWards = dataCity[0].Districts.filter(n => n.Id == this.value)[0].Wards;
 
                     for (const w of dataWards) {
                         wards.options[wards.options.length] = new Option(w.Name, w.Id);

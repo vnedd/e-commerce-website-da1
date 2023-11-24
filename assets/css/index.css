@@ -19,6 +19,25 @@
 .scrollbar-hide::-webkit-scrollbar {
     display: none;
 }
+
+.styled-scrollbar::-webkit-scrollbar {
+    width: 5px;
+}
+
+.styled-scrollbar::-webkit-scrollbar-track {
+    /* @apply bg-violet-200 */
+    background: rgb(246, 244, 255);
+}
+
+.styled-scrollbar::-webkit-scrollbar-thumb {
+    background: rgb(142, 114, 255);
+    border-radius: 999px;
+}
+
+.styled-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgb(73, 28, 255);
+}
+
 .noUi-connect {
     background-color: rgb(198, 0, 198) !important;
 }
@@ -50,4 +69,10 @@ option {
 .tab-active {
     background-color: rgb(51 65 85);
     color: white;
+}
+
+.comment-textarea-active {
+    background-color: rgb(221 214 254);
+    opacity: 0.5;
+    color: rgb(96, 13, 230);
 }

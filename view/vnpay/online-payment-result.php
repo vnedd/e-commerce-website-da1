@@ -47,7 +47,6 @@ $secureHash = hash_hmac('sha512', $hashData, $vnp_HashSecret);
                     </div>
                     <div class="mt-8">
                         <?php echo order_item($order, $order_details, true, true) ?>
-                        <a href="index.php?act=shop" class="btn bg-slate-700 hover:bg-slate-800 text-white rounded-full mt-6 w-full">Continue Shopping</a>
                     </div>
                 </div>
         <?php

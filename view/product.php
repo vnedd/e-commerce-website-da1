@@ -71,18 +71,22 @@
         </form>
     </div>
     <hr class="my-10">
-    <!-- Product Description -->
-    <div class="w-full mt-10 border rounded-md px-6 p-8">
-        <h3 class="font-medium mb-4 text-xl">Products descriptions</h3>
-        <div class="product-description text-sm">
-            <?php echo $description ?>
+    <div class="grid grid-cols-2 gap-6">
+        <!-- Product Comments -->
+        <div class="w-full mt-10 border rounded-md px-6 p-8">
+            <h3 class="font-medium text-xl">Comments</h3>
+            <p class="text-sm text-neutral-400 mb-8">Please ask questions, someone will help you answer</p>
+            <hr class="my-6 w-full h-1">
+            <div class="product-description text-sm">
+                <?php include 'comment/comment.php' ?>
+            </div>
         </div>
-    </div>
-    <!-- Product Comments -->
-    <div class="w-full mt-10 border rounded-md px-6 p-8">
-        <h3 class="font-medium mb-4 text-xl">Products descriptions</h3>
-        <div class="product-description text-sm">
-            <?php echo $description ?>
+        <!-- Product Description -->
+        <div class="w-full mt-10 border rounded-md px-6 p-8">
+            <h3 class="font-medium mb-4 text-xl">Products descriptions</h3>
+            <div class="product-description text-sm h-[600px] overflow-y-auto styled-scrollbar">
+                <?php echo $description ?>
+            </div>
         </div>
     </div>
 </div>

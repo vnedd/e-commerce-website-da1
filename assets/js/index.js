@@ -84,4 +84,14 @@ if (swiperProduct) {
 
 // end handler swipper
 
-/// handle change product variant client side
+function getParent(element, selector) {
+    if (element) {
+        while (element.parentElement) {
+            element = element.parentElement;
+
+            if (element.matches(selector)) {
+                return element;
+            }
+        }
+    }
+}
