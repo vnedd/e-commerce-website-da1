@@ -15,6 +15,8 @@ include '../model/orders.php';
 include '../model/images.php';
 include '../model/users.php';
 include '../model/roles.php';
+include '../model/statistical.php';
+include '../model/comments.php';
 
 ?>
 
@@ -35,11 +37,11 @@ include '../model/roles.php';
     <link rel="stylesheet" href="../assets/css/index.css">
 </head>
 
-<body>
+<body class="styled-scrollbar">
     <div class="w-full overflow-x-hidden">
-        <div class="w-full flex items-center">
+        <div class="w-full flex items-center ">
             <?php include('./sidebar.php') ?>
-            <div class="flex-1 min-h-screen h-full lg:ml-[260px] ml-[80px] p-5 scrollbar-hide ">
+            <div class="flex-1 min-h-screen h-full lg:ml-[260px] ml-[80px] p-5">
                 <?php
                 if (isset($_GET['act'])) {
                     $act = $_GET['act'];
@@ -611,11 +613,40 @@ include '../model/roles.php';
                                 }
                             }
                             include('./orders/update.php');
+                            break;
+                        case 'list_comment':
+                            $list_comments = getall_comments();
+                            include('./comments/list.php');
+                            break;
+                        case 'delete_comment':
+                            if (isset($_GET['comment_id'])) {
+                                $comment_id = $_GET['comment_id'];
+                                deleteall_comment_of_parentId($comment_id);
+                                delete_comment($comment_id);
+                                header("location: index.php?act=list_comment");
+                            }
+                            break;
                         default:
+                            $total_amount = get_total_amount();
+                            $unpaid_amount = get_unpaid_amount();
+                            $paid_amount =  get_paid_amount();
+                            $return_amount =  get_return_amount();
+                            $orderData = order_of_day();
+                            $qty_product_of_category = qty_product_of_category();
+                            $top_5_most_view_products = top_5_most_views_product();
+                            $top_5_bestseller_products = top_5_bestseller_product();
                             include 'dashboard.php';
                             break;
                     }
                 } else {
+                    $total_amount = get_total_amount();
+                    $unpaid_amount = get_unpaid_amount();
+                    $paid_amount =  get_paid_amount();
+                    $return_amount =  get_return_amount();
+                    $orderData = order_of_day();
+                    $qty_product_of_category = qty_product_of_category();
+                    $top_5_most_view_products = top_5_most_views_product();
+                    $top_5_bestseller_products = top_5_bestseller_product();
                     include 'dashboard.php';
                 }
                 ?>

@@ -57,6 +57,18 @@ function get_feature_product()
     return pdo_query($sql);
 }
 
+function get_latest_product()
+{
+    $sql = "SELECT products.*, categories.name as category_name, GROUP_CONCAT(images.image_url) AS image_urls
+    FROM products
+    INNER JOIN images ON products.product_id = images.product_id
+    LEFT JOIN categories ON products.category_id = categories.category_id
+    GROUP BY products.product_id
+    ORDER BY products.product_id DESC
+    LIMIT 10";
+    return pdo_query($sql);
+}
+
 function getall_product_shoppage($keyword, $min, $max, $category_id, $brand_id)
 {
     $sql = "SELECT products.*, categories.name as category_name, GROUP_CONCAT(images.image_url) AS image_urls
@@ -79,7 +91,7 @@ function getall_product_shoppage($keyword, $min, $max, $category_id, $brand_id)
         $sql .= " AND products.brand_id='$brand_id'";
     }
 
-    $sql .= " GROUP BY products.product_id LIMIT 10";
+    $sql .= " GROUP BY products.product_id LIMIT 6";
 
     return pdo_query($sql);
 }
@@ -94,4 +106,10 @@ function getone_product_client($product_id)
     WHERE products.product_id = ?
     GROUP BY products.product_id";
     return pdo_query_one($sql, $product_id);
+}
+
+function inscrease_views($product_id)
+{
+    $sql = "UPDATE products SET views = views + 1 WHERE product_id = '$product_id'";
+    pdo_execute($sql);
 }

@@ -42,7 +42,7 @@
         <div class="w-full h-full mt-5 border border-neutral-200">
             <table class="table lg:table-lg md:table-md sm:table-sm table-xs">
                 <!-- head -->
-                <thead class="bg-slate-700 text-white  text-sm">
+                <thead class="bg-slate-700 text-white text-sm">
                     <tr>
                         <th>ID</th>
                         <th>Product Name</th>

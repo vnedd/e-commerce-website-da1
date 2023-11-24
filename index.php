@@ -231,7 +231,7 @@ include './model/users.php';
                                 $email = $_POST['email'];
                                 $phone = $_POST['phone'];
                                 $order_note = $_POST['order-note'];
-                                $createdAt = date("h:i:sa d/m/Y");
+                                $createdAt = date("Y-m-d");
                                 $totalAmount = $_POST['total-price'];
                                 $address = $_POST['address'];
                                 $shipingType = $_POST['shipping_type'];
@@ -328,6 +328,7 @@ include './model/users.php';
                                 $product_id = $_GET['product_id'];
                                 $product = getone_product_client($product_id);
                                 $variants = getall_variant_by_productId($product_id);
+                                inscrease_views($product_id);
                                 $variantDataJson = json_encode($variants);
                                 extract($product);
                                 $image_urls = explode(',', $image_urls);
@@ -341,6 +342,7 @@ include './model/users.php';
                             $billboards = getall_billboard();
                             $categories = getall_category();
                             $feature_products = get_feature_product();
+                            $latest_products = get_latest_product();
                             include './view/home.php';
                             break;
                     }
@@ -348,6 +350,8 @@ include './model/users.php';
                     $billboards = getall_billboard();
                     $categories = getall_category();
                     $feature_products = get_feature_product();
+                    $latest_products = get_latest_product();
+
                     include './view/home.php';
                 }
                 ?>
@@ -357,6 +361,7 @@ include './model/users.php';
         include './view/footer.php';
         ?>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
     <script src="./assets/js/index.js"></script>
     <script src="./assets/js/shopping-modal.js"></script>

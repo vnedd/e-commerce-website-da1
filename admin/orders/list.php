@@ -6,8 +6,8 @@
         </div>
     </div>
     <div>
-        <form action="" method="post">
-            
+        <form action="">
+
         </form>
     </div>
     <div>
