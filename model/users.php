@@ -52,12 +52,13 @@ function checklogin_client($email, $password)
     $user =  pdo_query_one($sql, $email, $password);
     return $user;
 }
-function getall_user_lk_fk($keyword,$email){
-    $sql = "SELECT * FROM users where 
-    users.name like '%$keyword%'
-    AND users.email like '%$email%' 
-    Group by users.name
-     ";
+function getall_user_lk_fk($keyword){
+    $sql = "SELECT * FROM users where  1= 1";
+    if (!empty($keyword)) {
+        $sql .= " AND name LIKE '%" . $keyword . "%'";
+    }
+
+    
      return pdo_query($sql);
  
 }

@@ -456,16 +456,13 @@ include '../model/posts.php';
                             }
                             break;
                         case 'list_user':
-                            $list_user = getall_user();
                             $keyword = "";
-                            $email = "";
-                            $role_id = "";
                             if (isset($_POST['filter'])) {
                                $keyword = $_POST['keyword'];
-                                $email = $_POST['email'];
-                               $user = getall_user_lk_fk($keyword,$email);
                             }
-                           
+                            $list_user =  getall_user_lk_fk($keyword);
+                     
+                        
                             include('./users/list.php');
                             break;
                         case 'add_user':
@@ -602,7 +599,14 @@ include '../model/posts.php';
                             }
                             break;
                         case 'list_order':
+                            $email = "";
+                            if (isset($_POST['filter_em'])) {
+                             $email = $_POST['email'];
+
+                            }
+                            $list_order =  getone_orders($email);
                             include('./orders/list.php');
+                             
                             break;
                         case 'update_order':
                             if (isset($_GET['order_id'])) {

@@ -5,7 +5,7 @@
         <h4 class="font-semibold text-3xl">Brands</h4>
         <p class="text-neutral-500 mt-1">List of the brands</p>
     </div>
-    <form id="form-user-search" class="flex flex-col md:flex-row items-start md:items-center space-y-4 md:space-y-0 md:space-x-4" action="index.php?act=list_user" method="post">
+    <form id="form-user-search" class="flex flex-col md:flex-row items-start md:items-center space-y-4 md:space-y-0 md:space-x-4" action="index.php?act=list_brand" method="post">
         <div class="flex-grow">
             <label for="keyword" class="block text-xs">Find Brand</label>
             <div class="flex">
