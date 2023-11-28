@@ -48,12 +48,16 @@ include './model/users.php';
                                 $error = array();
                                 $email = $_POST['email'];
                                 $password = $_POST['password'];
+                              
 
                                 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                                     $error['email'] = 'Invalid email address';
                                 }
                                 if (strlen($password) < 6) {
                                     $error['password'] = 'Password must be at least 6 characters long';
+                                }
+                                if (strlen($password) < 1) {
+                                    $error['password'] = ' You must Enter Password';
                                 }
                                 $user = checklogin_client($email, $password);
 
@@ -101,6 +105,21 @@ include './model/users.php';
                             unset($_SESSION['user']);
                             header('location: index.php?act=login');
                             break;
+                            
+                        case 'forget-password':
+                                if (isset($_POST['sendMail'])) {
+                                    $error = array();
+                                    $email = $_POST['email'];
+                                    if (empty($email)) {
+                                      $error['email']="You aren't enter email the email yet";
+                                    }
+                                    if(!empty($email)){
+                                        $error['email']="The password has been sent to your mail ";
+                                    }
+                                    $sendMailMess = sendMail($email);
+                                }
+                                include('view/auth/fgpass.php');
+                                break;
                         case "profile":
                             if (isset($_GET['user_id']) && isset($_SESSION['user'])) {
                                 $user = $_SESSION['user'];
@@ -328,8 +347,11 @@ include './model/users.php';
                                 $product_id = $_GET['product_id'];
                                 $product = getone_product_client($product_id);
                                 $variants = getall_variant_by_productId($product_id);
+                              
+
                                 inscrease_views($product_id);
                                 $variantDataJson = json_encode($variants);
+                              
                                 extract($product);
                                 $image_urls = explode(',', $image_urls);
                                 include('./view/product.php');

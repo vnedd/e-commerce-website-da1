@@ -113,3 +113,8 @@ function inscrease_views($product_id)
     $sql = "UPDATE products SET views = views + 1 WHERE product_id = '$product_id'";
     pdo_execute($sql);
 }
+function load_product_samecategories($product_id , $category_id ){
+    $sql = "select * from products where category_id = $category_id and product_id <> $product_id";
+    $result = pdo_query($sql);
+    return $result;
+}
