@@ -109,13 +109,14 @@ include './model/users.php';
                         case 'forget-password':
                                 if (isset($_POST['sendMail'])) {
                                     $error = array();
+                                    $email_sent = true;
                                     $email = $_POST['email'];
-                                    if (empty($email)) {
-                                      $error['email']="You aren't enter email the email yet";
+                                    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                                        $error['email']="Email is invalid";
+                                    } else {
+                                        $error['email']="Pass was sent to your mail";
                                     }
-                                    if(!empty($email)){
-                                        $error['email']="The password has been sent to your mail ";
-                                    }
+                                 
                                     $sendMailMess = sendMail($email);
                                 }
                                 include('view/auth/fgpass.php');
