@@ -24,7 +24,6 @@
             </ul>
         </nav>
         <div class="ml-auto flex items-center space-x-4">
-            <button class="btn btn-circle outline-none border-0 bg-transparent hover:bg-slate-200 btn-md"><i class="bi bi-search text-lg"></i></button>
             <div class="indicator">
                 <span class="indicator-item badge p-2 py-3 bg-slate-800 text-white mt-2 mr-2"><?php echo isset($_SESSION['carts']) ? count($_SESSION['carts']) : 0 ?></span>
                 <button class="btn btn-circle outline-none border-0 bg-transparent hover:bg-slate-200 btn-md">

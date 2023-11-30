@@ -48,11 +48,9 @@
                     </div>
                     <div class="w-full mt-4">
                         <p class="text-sm text-center">Taxes and shipping caculated at checkout</p>
-                        <div class="btn btn-outline w-full my-2">
-                            <?php
-                            echo isset($_SESSION['user']) ? "<a href='index.php?act=checkout'>Checkout</a>" : "<a href='index.php?act=login'>Login to checkout</a>"
-                            ?>
-                        </div>
+                        <?php
+                        echo isset($_SESSION['user']) ? "<a class='btn btn-outline w-full my-2' href='index.php?act=checkout'>Checkout</a>" : "<a class='btn btn-outline w-full my-2'  href='index.php?act=login'>Login to checkout</a>"
+                        ?>
                         <div class="flex items-center mt-1">
                             <i class="bi bi-arrow-left mr-2"></i>
                             <a href="index.php" class="text-xs">Continue to shopping</a>

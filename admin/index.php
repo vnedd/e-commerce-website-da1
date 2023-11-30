@@ -663,7 +663,6 @@ include '../model/comments.php';
             }
         }
     </script>
-
 </body>
 
 </html>
