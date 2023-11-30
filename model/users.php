@@ -52,3 +52,44 @@ function checklogin_client($email, $password)
     $user =  pdo_query_one($sql, $email, $password);
     return $user;
 }
+function sendMail($email) {
+    $sql="SELECT * FROM users WHERE email='$email'";
+    $account = pdo_query_one($sql);
+    if ($account != false) {
+        sendMailPass($email, $account['name'], $account['password']);
+       
+    } 
+}
+
+function sendMailPass($email, $username, $pass) {
+    require 'PHPMailer/src/Exception.php';
+    require 'PHPMailer/src/PHPMailer.php';
+    require 'PHPMailer/src/SMTP.php';
+
+    $mail = new PHPMailer\PHPMailer\PHPMailer(true);
+
+    try {
+        //Server settings
+        $mail->SMTPDebug = PHPMailer\PHPMailer\SMTP::DEBUG_OFF;                      //Enable verbose debug output
+        $mail->isSMTP();                                            //Send using SMTP
+        $mail->Host       = 'sandbox.smtp.mailtrap.io';                     //Set the SMTP server to send through
+        $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+        $mail->Username   = '5c3bab177abd9b';                     //SMTP username
+        $mail->Password   = '3c1bc33d9c630f';                               //SMTP password
+        $mail->SMTPSecure = PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;            //Enable implicit TLS encryption
+        $mail->Port       = 587;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+
+        //Recipients
+        $mail->setFrom('duanmau@example.com', 'duanmau');
+        $mail->addAddress($email, $username);     //Add a recipient
+
+        //Content
+        $mail->isHTML(true);                                  //Set email format to HTML
+        $mail->Subject = 'Nguoi dung quen mat khau';
+        $mail->Body    = 'Mau khau cua ban la' .$pass;
+
+        $mail->send();
+    } catch (Exception $e) {
+        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+    }
+}
