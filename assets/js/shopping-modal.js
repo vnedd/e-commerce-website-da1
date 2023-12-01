@@ -4,17 +4,15 @@ const cartQtyInput = document.getElementById('cart-qty-input');
 const currentVariantStock = document.querySelector('.variant-stock');
 
 if (inscreaseQtyBtn && decreaseQtyBtn && cartQtyInput && currentVariantStock) {
-    const currentVariantStockValue = currentVariantStock.dataset.stock;
-
     inscreaseQtyBtn.addEventListener('click', () => {
-        let qty = parseInt(cartQtyInput.value) + 1;
-        if (Number(cartQtyInput.value) > Number(currentVariantStockValue)) {
+        const currentVariantStockValue = currentVariantStock.dataset.stock;
+        if (Number(cartQtyInput.value) >= Number(currentVariantStockValue)) {
             alert(
                 'The quantity purchased is too much so it must remain in stock',
             );
             cartQtyInput.value = 1;
         } else {
-            cartQtyInput.value = qty;
+            cartQtyInput.value = parseInt(cartQtyInput.value) + 1;
         }
     });
 
@@ -27,7 +25,8 @@ if (inscreaseQtyBtn && decreaseQtyBtn && cartQtyInput && currentVariantStock) {
         }
     });
     cartQtyInput.onchange = () => {
-        if (Number(cartQtyInput.value) > Number(currentVariantStockValue)) {
+        const currentVariantStockValue = currentVariantStock.dataset.stock;
+        if (Number(cartQtyInput.value) >= Number(currentVariantStockValue)) {
             alert(
                 'The quantity purchased is too much so it must remain in stock',
             );

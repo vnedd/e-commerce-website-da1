@@ -102,7 +102,7 @@
             const inputQty = parent.querySelector('.cart-qty-input')
             const variantStock = Number(parent.querySelector('.variant-stock').dataset.stock);
             let qty = parseInt(inputQty.value) + 1;
-            if (Number(inputQty.value) > Number(variantStock)) {
+            if (Number(inputQty.value) >= Number(variantStock)) {
                 alert(
                     'The quantity purchased is too much so it must remain in stock',
                 );
@@ -131,7 +131,7 @@
         input.onchange = () => {
             const parent = getParent(input, '.cart-item')
             const variantStock = Number(parent.querySelector('.variant-stock').dataset.stock);
-            if (Number(input.value) > Number(variantStock)) {
+            if (Number(input.value) >= Number(variantStock)) {
                 alert(
                     'The quantity purchased is too much so it must remain in stock',
                 );
