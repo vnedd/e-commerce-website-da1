@@ -88,6 +88,7 @@ include './model/users.php';
                                 $user = checksignup_client($email);
                                 if (is_array($user)) {
                                     $error['email'] = 'Email already exists';
+                                    $registerError = 'Email already exists';
                                 }
                                 if (strlen($password) < 6) {
                                     $error['password'] = 'Password must be at least 6 characters long';

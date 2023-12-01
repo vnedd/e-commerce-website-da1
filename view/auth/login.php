@@ -26,7 +26,10 @@
                     </div>
                     <span class="form-message text-xs text-red-600 relative leading-3"></span>
                 </div>
-                <button class="btn md:btn-md btn-sm capitalize bg-slate-700 hover:bg-slate-800 w-full text-white" type="submit" id="login" name="login">
+                <p class="text-sm text-right">
+                    <a class="hover:underline" href="index.php?act=forget-password">Forget password?</a>
+                </p>
+                <button class="btn md:btn-md btn-sm capitalize bg-slate-700 hover:bg-slate-800 w-full text-white btn-disabled" type="submit" id="login" name="login">
                     Sign In
                 </button>
                 <?php echo !empty($login_error) ? '<span class="text-red-500 text-xs">' . $login_error . '</span>' : ""  ?>
@@ -35,9 +38,7 @@
         <p class="text-sm text-center">
             Dont't have an account? <a class="hover:underline" href="index.php?act=sign-up">Create now!</a>
         </p>
-        <p class="text-sm text-center">
-           Forget password <a class="hover:underline" href="index.php?act=forget-password">Click here!</a>
-        </p>
+
     </div>
 </div>
 <script>

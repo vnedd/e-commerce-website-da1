@@ -35,7 +35,7 @@
                 <button class="btn md:btn-md btn-sm capitalize bg-slate-700 hover:bg-slate-800 w-full text-white btn-disabled" type="submit" name="sign-up" id="sign-up">
                     Create account
                 </button>
-                <?php echo !empty($loginError) ? '<span class="text-red-500 text-sm">' . $loginError . '</span>' : ""  ?>
+                <?php echo !empty($registerError) ? '<span class="text-red-500 text-sm">' . $registerError . '</span>' : ""  ?>
             </div>
         </form>
         <p class="text-sm text-center">
@@ -100,7 +100,7 @@
     }
 
     function validatePassword(pass) {
-        const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,}$/gm
+        const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,}$/g
         return regex.test(pass)
     }
 

@@ -12,21 +12,18 @@
                     </label>
                     <input class="form-input text-sm rounded-md w-full" id="email" name="email" type="text" placeholder="Email">
                     <?php echo !empty($error['email']) ? '<span class="text-red-500 text-xs">' . $error['email'] . '</span>' : ""  ?>
-              
-                <button class="btn md:btn-md btn-sm capitalize bg-slate-700 hover:bg-slate-800 w-full text-white mt-5" type="submit" name="sendMail">
-                  Confirm
-                </button>
-                <?php echo !empty($loginError) ? '<span class="text-red-500 text-xs">' . $loginError . '</span>' : ""  ?>
-            </div>
-            <?php if (isset($sendMailMess) && $sendMailMess != '') {
-            echo $sendMailMess;
-      } ?>
+
+                    <button class="btn md:btn-md btn-sm capitalize bg-slate-700 hover:bg-slate-800 w-full text-white mt-5" type="submit" name="sendMail">
+                        Confirm
+                    </button>
+                    <?php echo !empty($loginError) ? '<span class="text-red-500 text-xs">' . $loginError . '</span>' : ""  ?>
+                </div>
+                <?php if (isset($sendMailMess) && $sendMailMess != '') {
+                    echo $sendMailMess;
+                } ?>
         </form>
         <p class="text-sm text-center">
             Dont't have an account? <a class="hover:underline" href="index.php?act=sign-up">Create now!</a>
-        </p>
-        <p class="text-sm text-center">
-           Forget password <a class="hover:underline" href="index.php?act=forget-password">Click here</a>
         </p>
     </div>
 </div>

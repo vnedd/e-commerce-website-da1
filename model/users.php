@@ -52,6 +52,7 @@ function checklogin_client($email, $password)
     $user =  pdo_query_one($sql, $email, $password);
     return $user;
 }
+
 function sendMail($email) {
     $sql="SELECT * FROM users WHERE email='$email'";
     $account = pdo_query_one($sql);

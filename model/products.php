@@ -84,7 +84,7 @@ function getall_product_shoppage($keyword, $min, $max, $category_id, $brand_id, 
         $sql .= " AND (products.name LIKE '%$keyword%' OR products.description LIKE '%$keyword%') ";
     }
     if (!empty($min) && !empty($max)) {
-        $sql .= " AND products.price BETWEEN '$min' AND '$max'";
+        $sql .= " AND variants.price BETWEEN '$min' AND '$max'";
     }
     if (!empty($category_id) && $category_id !== 'all') {
         $sql .= " AND products.category_id='$category_id'";
@@ -121,9 +121,10 @@ function inscrease_views($product_id)
     $sql = "UPDATE products SET views = views + 1 WHERE product_id = '$product_id'";
     pdo_execute($sql);
 }
+
 function load_product_samecategories($product_id, $category_id)
 {
-    $sql = "select * from products where category_id = $category_id and product_id <> $product_id";
+    $sql = "select * from products where category_id = $category_id and product_id = $product_id";
     $result = pdo_query($sql);
     return $result;
 }
