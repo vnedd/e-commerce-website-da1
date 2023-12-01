@@ -612,7 +612,6 @@ include '../model/comments.php';
                                     header('location: index.php?act=list_order');
                                 }
                             }
-                            include('./orders/update.php');
                             break;
                         case 'list_comment':
                             $list_comments = getall_comments();

@@ -19,23 +19,27 @@
             <?php
             foreach ($carts as $key => $cart) {
                 extract($cart);
+                $quantity = !empty($quantity) ? $quantity : 1;
                 $totalPrice += (int)($price) * (int)($quantity);
             ?>
-                <div class="grid grid-cols-10 items-center gap-x-4 cart-item text-sm md:text-base">
-                    <img class=" col-span-2 h-[110px] rounded-lg object-cover" src="./<?php echo $image_path . $image_url ?>" alt="">
-                    <h3 class=" col-span-3 line-clamp-2"><?php echo $name . " - " . $variant_name ?></h3>
-                    <div class="lg:col-span-3 col-span-2 flex justify-center items-center space-x-4">
-                        <div class="flex flex-col md:flex-row items-center md:space-x-2 md:space-y-0 space-y-2">
-                            <span class="descrease-cart-qty btn btn-square btn-sm rounded-full btn-outline cursor-pointer font-bold text-lg">-</span>
-                            <input type="number" min=1 value="<?php echo $quantity ?>" name="quantity[]" class="form-input w-[60px] m-0 cart-qty-input">
-                            <input type="text" hidden value="<?php echo $key ?>" name="cart_index[]">
-                            <span class="inscrease-cart-qty btn btn-square btn-sm rounded-full btn-outline cursor-pointer font-bold text-lg">+</span>
+                <div class="cart-item">
+                    <div class="grid grid-cols-10 items-center gap-x-4 text-sm md:text-base">
+                        <img class=" col-span-2 h-[110px] rounded-lg object-cover" src="./<?php echo $image_path . $image_url ?>" alt="">
+                        <h3 class=" col-span-3 line-clamp-2"><?php echo $name . " - " . $variant_name ?></h3>
+                        <div class="lg:col-span-3 col-span-2 flex justify-center items-center space-x-4">
+                            <div class="flex flex-col md:flex-row items-center md:space-x-2 md:space-y-0 space-y-2">
+                                <span class="descrease-cart-qty btn btn-square btn-sm rounded-full btn-outline cursor-pointer font-bold text-lg">-</span>
+                                <input type="number" min=1 value="<?php echo $quantity ?>" name="quantity[]" class="form-input w-[60px] m-0 cart-qty-input">
+                                <input type="text" hidden value="<?php echo $key ?>" name="cart_index[]">
+                                <span class="inscrease-cart-qty btn btn-square btn-sm rounded-full btn-outline cursor-pointer font-bold text-lg">+</span>
+                            </div>
                         </div>
+                        <h4 class="col-span-1 text-center lg:text-xl text-base">$<?php echo $price ?></h4>
+                        <a href="index.php?act=delete-cart&cart-id=<?php echo $key ?>" class="lg:col-span-1 col-span-2 hover:underline text-right">Remove</a>
                     </div>
-                    <h4 class="col-span-1 text-center lg:text-xl text-base">$<?php echo $price ?></h4>
-                    <a href="index.php?act=delete-cart&cart-id=<?php echo $key ?>" class="lg:col-span-1 col-span-2 hover:underline text-right">Remove</a>
+                    <div class="variant-stock" data-stock="<?php echo $variant_stock ?>"></div>
+                    <div class="divider"></div>
                 </div>
-                <div class="divider"></div>
             <?php
             }
             ?>
@@ -90,15 +94,22 @@
 
     const inscreaseQtyBtns = document.querySelectorAll('.inscrease-cart-qty')
     const decreaseQtyBtns = document.querySelectorAll('.descrease-cart-qty')
-
+    const quantiyInputs = document.querySelectorAll('.cart-qty-input')
 
     inscreaseQtyBtns.forEach(btn => {
         btn.addEventListener('click', function() {
             const parent = getParent(this, '.cart-item')
             const inputQty = parent.querySelector('.cart-qty-input')
-
+            const variantStock = Number(parent.querySelector('.variant-stock').dataset.stock);
             let qty = parseInt(inputQty.value) + 1;
-            inputQty.setAttribute("value", qty);
+            if (Number(inputQty.value) > Number(variantStock)) {
+                alert(
+                    'The quantity purchased is too much so it must remain in stock',
+                );
+                inputQty.value = 1;
+            } else {
+                inputQty.value = qty;
+            }
         })
     })
 
@@ -106,13 +117,26 @@
         btn.addEventListener('click', function() {
             const parent = getParent(this, '.cart-item')
             const inputQty = parent.querySelector('.cart-qty-input')
-
+            const variantStock = Number(parent.querySelector('.variant-stock').dataset.stock);
             if (parseInt(inputQty.value) > 1) {
                 let qty = parseInt(inputQty.value) - 1;
-                inputQty.setAttribute("value", qty);
+                inputQty.value = qty ? qty : 1
             } else {
                 alert('quantity must be more than one');
             }
         })
+    })
+
+    quantiyInputs.forEach(input => {
+        input.onchange = () => {
+            const parent = getParent(input, '.cart-item')
+            const variantStock = Number(parent.querySelector('.variant-stock').dataset.stock);
+            if (Number(input.value) > Number(variantStock)) {
+                alert(
+                    'The quantity purchased is too much so it must remain in stock',
+                );
+                input.value = 1;
+            }
+        };
     })
 </script>

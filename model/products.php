@@ -83,8 +83,11 @@ function getall_product_shoppage($keyword, $min, $max, $category_id, $brand_id, 
     if (!empty($keyword)) {
         $sql .= " AND (products.name LIKE '%$keyword%' OR products.description LIKE '%$keyword%') ";
     }
-    if (!empty($min) && !empty($max)) {
-        $sql .= " AND variants.price BETWEEN '$min' AND '$max'";
+    if (!empty($min)) {
+        $sql .= " AND variants.price > '$min'";
+    }
+    if (!empty($max)) {
+        $sql .= " AND variants.price < '$max'";
     }
     if (!empty($category_id) && $category_id !== 'all') {
         $sql .= " AND products.category_id='$category_id'";

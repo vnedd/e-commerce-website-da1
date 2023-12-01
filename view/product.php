@@ -56,7 +56,7 @@
                 <p class="product-quantity text-violet-700 mr-2"><?php echo $variants[0]['quantity'] ?></p>
                 <p class="text-violet-700">In Stock <i class="bi bi-check"></i></p>
             </div>
-
+            <div class="variant-stock" data-stock="<?php echo $variants[0]['quantity'] ?>"></div>
             <input type="hidden" name="product_id" value="<?php echo $product_id ?>">
             <input type="hidden" name="name" value="<?php echo $name ?>">
             <input type="hidden" name="discount" value="<?php echo $discount ?>">
@@ -71,7 +71,14 @@
         </form>
     </div>
     <hr class="my-10">
-    <div class="grid grid-cols-2 gap-6">
+    <div class="grid lg:grid-cols-2 grid-cols-1 gap-6">
+        <!-- Product Description -->
+        <div class="w-full mt-10 border rounded-md px-6 p-8">
+            <h3 class="font-medium mb-4 text-xl">Products descriptions</h3>
+            <div class="product-description text-sm h-[600px] overflow-y-auto styled-scrollbar">
+                <?php echo $description ?>
+            </div>
+        </div>
         <!-- Product Comments -->
         <div class="w-full mt-10 border rounded-md px-6 p-8">
             <h3 class="font-medium text-xl">Comments</h3>
@@ -81,25 +88,15 @@
                 <?php include 'comment/comment.php' ?>
             </div>
         </div>
-        <!-- Product Description -->
-        <div class="w-full mt-10 border rounded-md px-6 p-8">
-            <h3 class="font-medium mb-4 text-xl">Products descriptions</h3>
-            <div class="product-description text-sm h-[600px] overflow-y-auto styled-scrollbar">
-                <?php echo $description ?>
-            </div>
-        </div>
     </div>
-    
+
 </div>
-
-
 
 
 <script>
     function handlerChangeInput(variants) {
         const selectedInput = document.querySelector('input[name=variant_id]:checked').value;
         const currentVariant = variants.find(variant => variant.variant_id === selectedInput);
-        console.log(variants)
         if (Number(currentVariant.quantity) > 0) {
             document.querySelector('.product-quantity-wrapper').innerHTML = `
             <p class="product-quantity text-violet-700 mr-2">${currentVariant.quantity}</p>

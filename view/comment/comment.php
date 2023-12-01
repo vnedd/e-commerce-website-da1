@@ -22,26 +22,29 @@
     }
     ?>
 </div>
+
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <script>
     const commentContent = document.getElementById('comment');
-    const sendCommentBtn = document.getElementById('send-comment')
-    const user_id = <?php echo $_SESSION['user']['user_id'] ?>;
+    const sendCommentBtn = document.getElementById('send-comment');
+    let user_id = `<?php echo isset($_SESSION['user']) ? $_SESSION['user']['user_id']  : "none" ?>`;
+    if (user_id === 'none') {
+        user_id = null;
+    }
     const product_id = <?php echo $_GET['product_id'] ?>;
+    if (commentContent) {
+        commentContent.addEventListener('input', function() {
+            if (this.value) {
+                sendCommentBtn.classList.remove('btn-disabled')
+                sendCommentBtn.classList.add('comment-textarea-active')
+            } else {
+                sendCommentBtn.classList.add('btn-disabled')
+                sendCommentBtn.classList.remove('comment-textarea-active')
 
-    console.log(product_id)
-
-    commentContent.addEventListener('input', function() {
-        if (this.value) {
-            sendCommentBtn.classList.remove('btn-disabled')
-            sendCommentBtn.classList.add('comment-textarea-active')
-        } else {
-            sendCommentBtn.classList.add('btn-disabled')
-            sendCommentBtn.classList.remove('comment-textarea-active')
-
-        }
-    })
+            }
+        })
+    }
 
 
     function submitComment(parent_id) {

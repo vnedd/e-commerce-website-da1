@@ -4,7 +4,7 @@
             hello
         </div>
 
-        <div class="flex items-center space-x-3 lg:pr-16 pr-6 shrink">
+        <div class="items-center space-x-3 lg:pr-16 pr-6 shrink hidden md:flex">
             <a href="index.php"><img src="./assets/img/logo.svg" alt="logo" class="w-14 h-14"></a>
         </div>
         <nav class="flex justify-between">

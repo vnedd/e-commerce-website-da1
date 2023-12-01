@@ -196,7 +196,7 @@ include './model/users.php';
                                 $name = $_POST['name'];
                                 $discount = $_POST['discount'];
                                 $image_url = $_POST['image_url'];
-                                $quantity = $_POST['quantity'];
+                                $quantity = isset($_POST['quantity']) ? $_POST['quantity'] : 1;
                                 $variant_id = $_POST['variant_id'];
 
                                 $variant = getone_variant($variant_id);
@@ -211,6 +211,7 @@ include './model/users.php';
                                         'variant_id' => $variant['variant_id'],
                                         'variant_name' => $variant['variant_name'],
                                         'variant_price' => $variant['price'],
+                                        'variant_stock' => $variant['quantity']
                                     );
                                     $_SESSION['carts'][] = $dataCart;
                                     header('location: index.php?act=view-cart');
@@ -344,7 +345,6 @@ include './model/users.php';
                                 $brand_id = $_GET['brand_id'];
                             }
                             $products = getall_product_shoppage($keyword, $minPrice, $maxPrice, $category_id, $brand_id, $page);
-
                             $totalPages = ceil((int)$total_items['total'] / 6);
                             include('./view/shop.php');
                             break;

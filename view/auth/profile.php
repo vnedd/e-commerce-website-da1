@@ -8,7 +8,7 @@
             <div class="panel hidden p-4 md-p-8">
                 <form action="" method="post" enctype="multipart/form-data">
                     <div class="preview-image mt-2">
-                        <img class="w-[150px] h-[150px] object-cover rounded-full" src="<?php echo !empty($user['image_url']) ? "./" . $image_path . $user['image_url'] : '.././assets/img/mock-avatar.svg' ?>" alt="">
+                        <img class="w-[150px] h-[150px] object-cover rounded-full" src="<?php echo !empty($user['image_url']) ? "./" . $image_path . $user['image_url'] : '././assets/img/mock-avatar.svg' ?>" alt="">
                     </div>
                     <div class="flex flex-col space-y-2 w-1/2 my-6">
                         <label class="font-semibold" for="image_url">Upload image</label>

@@ -1,11 +1,21 @@
 const inscreaseQtyBtn = document.querySelector('.inscrease-cart-qty');
 const decreaseQtyBtn = document.querySelector('.descrease-cart-qty');
 const cartQtyInput = document.getElementById('cart-qty-input');
+const currentVariantStock = document.querySelector('.variant-stock');
 
-if (inscreaseQtyBtn && decreaseQtyBtn && cartQtyInput) {
+if (inscreaseQtyBtn && decreaseQtyBtn && cartQtyInput && currentVariantStock) {
+    const currentVariantStockValue = currentVariantStock.dataset.stock;
+
     inscreaseQtyBtn.addEventListener('click', () => {
         let qty = parseInt(cartQtyInput.value) + 1;
-        cartQtyInput.setAttribute('value', qty);
+        if (Number(cartQtyInput.value) > Number(currentVariantStockValue)) {
+            alert(
+                'The quantity purchased is too much so it must remain in stock',
+            );
+            cartQtyInput.value = 1;
+        } else {
+            cartQtyInput.value = qty;
+        }
     });
 
     decreaseQtyBtn.addEventListener('click', () => {
@@ -16,7 +26,16 @@ if (inscreaseQtyBtn && decreaseQtyBtn && cartQtyInput) {
             alert('quantity must be more than one');
         }
     });
+    cartQtyInput.onchange = () => {
+        if (Number(cartQtyInput.value) > Number(currentVariantStockValue)) {
+            alert(
+                'The quantity purchased is too much so it must remain in stock',
+            );
+            cartQtyInput.value = 1;
+        }
+    };
 }
+
 function openModal(product, variants) {
     const productImages = product.image_urls.split(',');
 
@@ -89,6 +108,8 @@ function handlerChangeInput(variants) {
             .querySelector('.add-to-cart-btn')
             .classList.add('btn-disabled');
     }
+    document.querySelector('.variant-stock').dataset.stock =
+        currentVariant.quantity;
 }
 
 function closeModal() {
