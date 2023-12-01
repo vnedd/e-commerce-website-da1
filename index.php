@@ -48,7 +48,7 @@ include './model/users.php';
                                 $error = array();
                                 $email = $_POST['email'];
                                 $password = $_POST['password'];
-                              
+
 
                                 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                                     $error['email'] = 'Invalid email address';
@@ -105,22 +105,22 @@ include './model/users.php';
                             unset($_SESSION['user']);
                             header('location: index.php?act=login');
                             break;
-                            
+
                         case 'forget-password':
-                                if (isset($_POST['sendMail'])) {
-                                    $error = array();
-                                    $email_sent = true;
-                                    $email = $_POST['email'];
-                                    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                                        $error['email']="Email is invalid";
-                                    } else {
-                                        $error['email']="Pass was sent to your mail";
-                                    }
-                                 
-                                    $sendMailMess = sendMail($email);
+                            if (isset($_POST['sendMail'])) {
+                                $error = array();
+                                $email_sent = true;
+                                $email = $_POST['email'];
+                                if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                                    $error['email'] = "Email is invalid";
+                                } else {
+                                    $error['email'] = "Pass was sent to your mail";
                                 }
-                                include('view/auth/fgpass.php');
-                                break;
+
+                                $sendMailMess = sendMail($email);
+                            }
+                            include('view/auth/fgpass.php');
+                            break;
                         case "profile":
                             if (isset($_GET['user_id']) && isset($_SESSION['user'])) {
                                 $user = $_SESSION['user'];
@@ -327,6 +327,8 @@ include './model/users.php';
                             $category_id = "";
                             $brand_id = "";
                             $brands = getall_brand();
+                            $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+                            $total_items = count_products();
 
                             $product_in_categorys = count_product_in_category();
                             if (isset($_POST['filter'])) {
@@ -340,7 +342,9 @@ include './model/users.php';
                             if (isset($_GET['brand_id'])) {
                                 $brand_id = $_GET['brand_id'];
                             }
-                            $products = getall_product_shoppage($keyword, $minPrice, $maxPrice, $category_id, $brand_id);
+                            $products = getall_product_shoppage($keyword, $minPrice, $maxPrice, $category_id, $brand_id, $page);
+
+                            $totalPages = ceil((int)$total_items['total'] / 6);
                             include('./view/shop.php');
                             break;
                         case 'product':
@@ -348,11 +352,11 @@ include './model/users.php';
                                 $product_id = $_GET['product_id'];
                                 $product = getone_product_client($product_id);
                                 $variants = getall_variant_by_productId($product_id);
-                              
+
 
                                 inscrease_views($product_id);
                                 $variantDataJson = json_encode($variants);
-                              
+
                                 extract($product);
                                 $image_urls = explode(',', $image_urls);
                                 include('./view/product.php');

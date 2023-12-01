@@ -69,8 +69,10 @@ function get_latest_product()
     return pdo_query($sql);
 }
 
-function getall_product_shoppage($keyword, $min, $max, $category_id, $brand_id)
+function getall_product_shoppage($keyword, $min, $max, $category_id, $brand_id, $page)
 {
+    $items_per_page = 6;
+    $offset = ($page - 1) * $items_per_page;
     $sql = "SELECT products.*, categories.name as category_name, GROUP_CONCAT(images.image_url) AS image_urls
     FROM products
     INNER JOIN images ON products.product_id = images.product_id
@@ -91,9 +93,15 @@ function getall_product_shoppage($keyword, $min, $max, $category_id, $brand_id)
         $sql .= " AND products.brand_id='$brand_id'";
     }
 
-    $sql .= " GROUP BY products.product_id LIMIT 6";
+    $sql .= " GROUP BY products.product_id LIMIT $offset, $items_per_page";
 
     return pdo_query($sql);
+}
+
+function count_products()
+{
+    $sql = "SELECT COUNT(*) as total from products";
+    return pdo_query_one($sql);
 }
 
 function getone_product_client($product_id)
@@ -113,7 +121,8 @@ function inscrease_views($product_id)
     $sql = "UPDATE products SET views = views + 1 WHERE product_id = '$product_id'";
     pdo_execute($sql);
 }
-function load_product_samecategories($product_id , $category_id ){
+function load_product_samecategories($product_id, $category_id)
+{
     $sql = "select * from products where category_id = $category_id and product_id <> $product_id";
     $result = pdo_query($sql);
     return $result;
