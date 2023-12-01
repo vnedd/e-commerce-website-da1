@@ -189,10 +189,10 @@
                         </a>
                         <div class="text-center mt-6">
                             <h1 class="text-gray-900 text-xl font-bold mb-1">
-                                Vu Van Thang
+                                Nguyen Huy Quoc
                             </h1>
                             <p class="text-gray-700 font-light mb-2">
-                                Leader & Coder
+                                PH39882
                             </p>
                             <div class="flex items-center justify-center opacity-50 hover:opacity-100
                                     transition-opacity duration-300">
@@ -217,7 +217,7 @@
                                 Vu Van Thang
                             </h1>
                             <p class="text-gray-700 font-light mb-2">
-                                Leader & Coder
+                                PH31121
                             </p>
                             <div class="flex items-center justify-center opacity-50 hover:opacity-100
                                     transition-opacity duration-300">
@@ -239,10 +239,10 @@
                         </a>
                         <div class="text-center mt-6">
                             <h1 class="text-gray-900 text-xl font-bold mb-1">
-                                Vu Van Thang
+                                Ngo Trong Khang
                             </h1>
                             <p class="text-gray-700 font-light mb-2">
-                                Leader & Coder
+                                PH33639
                             </p>
                             <div class="flex items-center justify-center opacity-50 hover:opacity-100
                                     transition-opacity duration-300">
