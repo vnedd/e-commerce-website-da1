@@ -626,6 +626,7 @@ include '../model/comments.php';
                                 header("location: index.php?act=list_comment");
                             }
                             break;
+                       
                         default:
                             $total_amount = get_total_amount();
                             $unpaid_amount = get_unpaid_amount();

@@ -365,7 +365,9 @@ include './model/users.php';
                                 header('location: index.php');
                             }
                             break;
-
+                        case 'list_post':
+                            include('view/userposts/viewpost.php');
+                            break;
                         default:
                             $billboards = getall_billboard();
                             $categories = getall_category();
