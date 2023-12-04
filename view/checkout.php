@@ -82,7 +82,7 @@
                             foreach ($paymentMethods as $key => $value) {
                                 $value = trim($value, "'");
                             ?>
-                                <div class="flex space-x-2 rounded-md shadow-sm hover:shadow-lg border p-2 cursor-pointer">
+                                <div class="flex space-x-2 rounded-md shadow-sm hover:shadow-lg border py-4 px-2 cursor-pointer">
                                     <input type="radio" name="payment_method" <?php echo $key === 0 ? 'checked' : '' ?> value="<?php echo $value ?>" id="payment_<?php echo $key ?>">
                                     <label for="payment_<?php echo $key ?>" class="capitalize text-sm cursor-pointer"><?php echo $value ?></label>
                                 </div>

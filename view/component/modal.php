@@ -15,7 +15,7 @@
                         <p class="product-quantity text-violet-700 mr-2"><?php echo $variants[0]['quantity'] ?></p>
                         <p class="text-violet-700">In Stock <i class="bi bi-check"></i></p>
                     </div>
-                    
+                    <div class="variant-stock" data-stock="<?php echo $variants[0]['quantity'] ?>"></div>
                     <div>
                         <p class="font-semibold mb-4">Quantity:</p>
                         <div class="flex items-center space-x-2">
