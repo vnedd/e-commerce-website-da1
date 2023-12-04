@@ -21,6 +21,9 @@
                 <li>
                     <a href="index.php" class="font-medium text-sm  text-slate-500 hover:text-slate-800 <?php echo isset($_GET['act']) && $_GET['act'] === "faqs" ? "text-slate-800 font-medium" : "" ?>">Faqs</a>
                 </li>
+                <li>
+                    <a href="index.php?act=list_post" class="font-medium text-sm  text-slate-500 hover:text-slate-800 <?php echo isset($_GET['act']) && $_GET['act'] === "Posts" ? "text-slate-800 font-medium" : "" ?>">Post</a>
+                </li>
             </ul>
         </nav>
         <div class="ml-auto flex items-center space-x-4">

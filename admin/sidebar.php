@@ -41,6 +41,10 @@ if (isset($_GET['act'])) {
             <div class="tooltip" data-tip="Comments"><i class="bi bi-chat-dots text-xl"></i></div>
             <p class="font-semibold text-sm hidden lg:block">Comments</p>
         </a>
+        <a class="flex items-center lg:justify-start justify-center gap-x-2 p-2 w-full rounded-md hover:bg-slate-50 text-slate-950 <?php echo  str_ends_with($act, 'post') ? "bg-slate-50" : "" ?>" href="index.php?act=list_post">
+            <div class="tooltip" data-tip="Post"><i class="bi bi-mailbox2-flag"></i></div>
+            <p class="font-semibold text-sm hidden lg:block">Post </p>
+        </a>
         <a class="absolute bottom-[70px] flex items-center lg:justify-start justify-center gap-x-2 p-2 w-full rounded-md hover:bg-slate-50 text-slate-950 mt-auto" href="index.php?act=sign-out">
             <div class="tooltip" data-tip="Sign out">
                 <i class="bi bi-box-arrow-left text-xl"></i>

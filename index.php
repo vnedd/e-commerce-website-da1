@@ -48,8 +48,6 @@ include './model/users.php';
                                 $error = array();
                                 $email = $_POST['email'];
                                 $password = $_POST['password'];
-
-
                                 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                                     $error['email'] = 'Invalid email address';
                                 }
@@ -365,7 +363,9 @@ include './model/users.php';
                                 header('location: index.php');
                             }
                             break;
-
+                        case 'list_post':
+                            include('view/userposts/viewpost.php');
+                            break;
                         default:
                             $billboards = getall_billboard();
                             $categories = getall_category();

@@ -235,7 +235,7 @@
                     </div>
                     <div class="flex flex-col">
                         <a href="#" class="mx-auto">
-                            <img class="rounded-2xl drop-shadow-md hover:drop-shadow-xl transition-all duration-200 delay-100" src="https://images.unsplash.com/photo-1634926878768-2a5b3c42f139?fit=clamp&w=400&h=400&q=80">
+                            <img class="rounded-2xl drop-shadow-md hover:drop-shadow-xl transition-all duration-200 delay-100 " src="https://static.vecteezy.com/system/resources/thumbnails/027/880/413/small_2x/robot-character-say-hi-hello-illustration-cute-robot-cartoon-illustration-design-vector.jpg">
                         </a>
                         <div class="text-center mt-6">
                             <h1 class="text-gray-900 text-xl font-bold mb-1">

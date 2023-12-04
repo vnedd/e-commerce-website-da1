@@ -29,3 +29,12 @@ function delete_brand($brand_id)
     $sql = "DELETE FROM brand WHERE brand_id=?";
     return pdo_execute($sql, $brand_id);
 }
+function getall_brands($keyword)
+{
+    $sql = "SELECT * FROM brand WHERE 1=1";
+    if (!empty($keyword)) {
+        $sql .= " AND name LIKE '%" . $keyword . "%'";
+    }
+ 
+    return pdo_query($sql);
+}

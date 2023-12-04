@@ -24,7 +24,7 @@
                             <i class="bi bi-eye "></i>
                         </div>
                     </div>
-                    <span class="form-message text-xs text-red-600 relative leading-3"></span>
+                    <span class="form-message text-xs text-red-600 relative leading-3 "></span>
                 </div>
                 <p class="text-sm text-right">
                     <a class="hover:underline" href="index.php?act=forget-password">Forget password?</a>
