@@ -35,7 +35,17 @@ function checklogin_admin($email, $password)
     $user =  pdo_query_one($sql, $email, $password);
     return $user;
 }
+// finusser
+function getall_user_lk_fk($keyword){
+    $sql = "SELECT * FROM users where  1= 1";
+    if (!empty($keyword)) {
+        $sql .= " AND name LIKE '%" . $keyword . "%'";
+    }
 
+    
+     return pdo_query($sql);
+ 
+}
 
 /// register client side
 

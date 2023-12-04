@@ -1,13 +1,28 @@
 <div class="animate__animated animate__lightSpeedInLeft animate__faster ">
-    <div class="flex items-center justify-between border-b border-neutral-300 pb-5 px-2">
-        <div>
-            <h4 class="font-semibold text-3xl ">Users</h4>
-            <p class="text-neutral-500 mt-1">List of the user</p>
+<div class="w-full mt-4">
+    <div>
+        <h4 class="font-semibold text-3xl">Users</h4>
+        <p class="text-neutral-500 mt-1">List of the users</p>
+    </div>
+    <form id="form-user-search" class="flex flex-col md:flex-row items-start md:items-center space-y-4 md:space-y-0 md:space-x-4" action="index.php?act=list_user" method="post">
+        <div class="flex-grow">
+            <label for="keyword" class="block text-xs">Find User</label>
+            <div class="flex">
+                <input type="text" name="keyword" id="keyword" class="form-input rounded-lg w-50" placeholder=" Enter Username...">
+                <button type="submit" name="filter" class="btn btn-sm rounded-full bg-slate-700 hover:bg-slate-800 text-white ml-2">
+                    <i class="bi bi-search text-xl"></i>
+                </button>
+            </div>
         </div>
+    </form>
+</div>  
+ 
+
         <a class="btn md:btn-md btn-sm rounded-full bg-slate-700 hover:bg-slate-900 text-white  " href="index.php?act=add_user">
             <p class="capitalize">Add new user</p>
             <i class="bi bi-plus-circle text-xl"></i>
         </a>
+       
     </div>
     <?php
     if (count($list_user) > 0) {

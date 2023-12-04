@@ -17,7 +17,7 @@ include '../model/users.php';
 include '../model/roles.php';
 include '../model/statistical.php';
 include '../model/comments.php';
-
+include '../model/posts.php';
 ?>
 
 <!DOCTYPE html>
@@ -141,9 +141,18 @@ include '../model/comments.php';
                             }
                             break;
                         case 'list_brand':
-                            $list_brand = getall_brand();
+                            $keyword = "";
+                            if (isset($_POST['filter_br'])) {
+                                $keyword = $_POST['keyword'];
+                            
+                            }else {
+                                $keyword = "";
+                            } 
+                            $list_brand = getall_brands($keyword);
+                                
                             include('./brands/list.php');
                             break;
+
                         case 'add_brand':
                             if (isset($_POST['add_brand'])) {
                                 $error = array();
@@ -449,10 +458,16 @@ include '../model/comments.php';
                                 header("Location:index.php?act=list_product");
                             }
                             break;
-                        case 'list_user':
-                            $list_user = getall_user();
-                            include('./users/list.php');
-                            break;
+                            case 'list_user':
+                                $keyword = "";
+                                if (isset($_POST['filter'])) {
+                                   $keyword = $_POST['keyword'];
+                                }
+                                $list_user =  getall_user_lk_fk($keyword);
+                         
+                            
+                                include('./users/list.php');
+                                break;
                         case 'add_user':
                             $roles = getall_role();
                             if (isset($_POST['add_user'])) {
@@ -626,6 +641,97 @@ include '../model/comments.php';
                                 header("location: index.php?act=list_comment");
                             }
                             break;
+
+                            case 'add_post':
+                                // $user = getall_user();
+                                if (isset($_POST['add_posts']) ) {
+                                 
+                                    $error = array();
+                                    $title = $_POST['title'];
+                                    $subtitle = $_POST['subtitle'];
+                                    $content = $_POST['content'];
+                                    
+                                    $created_at = date('Y-m-d');
+                                    // $user_id = $_POST['user_id'];
+                                 if (empty($title)) {
+                                    $error['title']='You must enter the title';
+                                 }
+                                 if (empty($subtitle)) {
+                                    $error['subtitle']='You must enter the subtitle';
+                                 }
+                                 if (empty($content)) {
+                                    $error['content']='You must enter the content';
+                                 }
+                                 if (empty($_FILES['image_url']['name'])) {
+                                    $error['image_url'] = "Image is required!";
+                                 } else{
+                                    $targetDir = '../upload/';
+                                    $newFileName = uniqid() . $_FILES['image_url']['name'];
+                                    $targetFile = $targetDir . $newFileName;
+                                    if (move_uploaded_file($_FILES['image_url']['tmp_name'], $targetFile)) {
+                                        $image_url = $newFileName;
+                                    } else {
+                                        $error['image_url'] = "Some thing went wrong!!";
+                                    }   
+                                 }
+                                 if (empty($error)) {
+                                 $insert = insert_posts($title,$image_url,$subtitle,$content,$created_at);
+                                 }
+                                 if ($insert) {
+                                    header('location: index.php?act=list_post');
+                                 }
+                                }
+                                    include('./posts/add.php');
+                                    break;
+                                
+                                case 'list_post':
+                                  $list_post = getall_posts();
+    
+                                    include('./posts/list.php');
+                                    break;
+                                    case 'update_post':
+                                        if (isset($_GET['post_id'])) {
+                                            $post_id = $_GET['post_id'];
+                                            $posts = getone_post($post_id);
+                                            if (isset($_POST['update_post'])) {
+                                                $error = array();
+                                                $title = $_POST['title'];
+                                                $subtitle = $_POST['subtitle'];
+                                                $content = $_POST['content'];
+                                                $created_at = $_POST['created_at'];
+                                                $user_id = $_POST['user_id'];
+                                                if (empty($title)) {
+                                                    $error['title'] = "Please enter title!";
+                                                }
+                                                if (empty($subtitle)) {
+                                                    $error['subtitle'] = "Please enter subtitle!";
+                                                }
+                                                if (empty($content)) {
+                                                    $error['content'] = "Please enter content!";
+                                                }
+                                                if (empty($created_at)) {
+                                                    $error['created_at'] = "Please enter created_at!";
+                                                }
+                                                if (empty($user_id)) {
+                                                    $error['user_id'] = "Please enter user_id!";
+                                                }
+                                                
+            
+                                                if (empty($error)) {
+                                                    update_posts($title,  $subtitle, $content,$created_at,$user_id,$post_id);
+                                                    header('location: index.php?act=list_post');
+                                                }
+                                            }
+                                            break;
+                                        }
+                                        include('./posts/update.php');
+                                        case 'delete_post':
+                                            if ($_GET['post_id']) {
+                                            $post_id = $_GET['post_id'];
+                                            delete_post($_GET['post_id']);
+                                            header('location: index.php?act=list_post');
+                                            }
+                                            break;
                        
                         default:
                             $total_amount = get_total_amount();

@@ -48,8 +48,6 @@ include './model/users.php';
                                 $error = array();
                                 $email = $_POST['email'];
                                 $password = $_POST['password'];
-
-
                                 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                                     $error['email'] = 'Invalid email address';
                                 }
