@@ -216,17 +216,7 @@ include './model/users.php';
                                 }
                             }
                             break;
-                        case 'update-cart':
-                            $carts = $_SESSION['carts'];
-                            if (isset($_POST['update-cart'])) {
-                                $cart_indexs = $_POST['cart_index'];
-                                $quantity = $_POST['quantity'];
-                                foreach ($cart_indexs as $key => $item) {
-                                    $_SESSION['carts'][$item]['quantity'] = $quantity[$key];
-                                }
-                                header('location: index.php?act=view-cart');
-                            }
-                            break;
+                        
                         case 'delete-cart':
                             $_SESSION['carts'];
                             if (isset($_GET['cart-id'])) {
