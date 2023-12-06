@@ -285,6 +285,7 @@ include './model/users.php';
                                             $product_name =   $cart['name'] . " " . $cart['variant_name'];
                                             $image = $cart['image_url'];
                                             insert_order_details($variant_id, $product_id, $product_name, $image,  $quantity, $price_per_unit, $order_id);
+                                            descrease_quantity_product_when_order_completed($variant_id, $quantity);
                                         }
                                         $_SESSION['carts'] = [];
                                         if ($payment_method === 'online payment') {

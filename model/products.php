@@ -131,3 +131,9 @@ function load_product_samecategories($product_id, $category_id)
     $result = pdo_query($sql);
     return $result;
 }
+
+function descrease_quantity_product_when_order_completed($variant_id, $quantity)
+{
+    $sql = "UPDATE variants SET quantity = quantity - $quantity WHERE variant_id=$variant_id";
+    pdo_execute($sql);
+}

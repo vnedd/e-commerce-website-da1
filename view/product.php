@@ -53,8 +53,18 @@
             <p class="text-sm text-neutral-500 uppercase">Brand: <span class="font-semibold text-slate-900"><?php echo $brand_name ?></span></p>
 
             <div class="product-quantity-wrapper flex items-center space-x-1 text-sm">
-                <p class="product-quantity text-violet-700 mr-2"><?php echo $variants[0]['quantity'] ?></p>
-                <p class="text-violet-700">In Stock <i class="bi bi-check"></i></p>
+                <?php
+                if ($variants[0]['quantity'] > 0) {
+                ?>
+                    <p class="product-quantity text-violet-700 mr-2"><?php echo $variants[0]['quantity'] ?></p>
+                    <p class="text-violet-700">In Stock <i class="bi bi-check"></i></p>
+                <?php
+                } else {
+                ?>
+                    <p class="text-red-700">Out Stock <i class="bi bi-emoji-expressionless"></i></p>
+                <?php
+                }
+                ?>
             </div>
             <div class="variant-stock" data-stock="<?php echo $variants[0]['quantity'] ?>"></div>
             <input type="hidden" name="product_id" value="<?php echo $product_id ?>">

@@ -6,7 +6,7 @@ const currentVariantStock = document.querySelector('.variant-stock');
 if (inscreaseQtyBtn && decreaseQtyBtn && cartQtyInput && currentVariantStock) {
     inscreaseQtyBtn.addEventListener('click', () => {
         const currentVariantStockValue = currentVariantStock.dataset.stock;
-        if (Number(cartQtyInput.value) >= Number(currentVariantStockValue)) {
+        if (Number(cartQtyInput.value) > Number(currentVariantStockValue)) {
             alert(
                 'The quantity purchased is too much so it must remain in stock',
             );
@@ -26,7 +26,7 @@ if (inscreaseQtyBtn && decreaseQtyBtn && cartQtyInput && currentVariantStock) {
     });
     cartQtyInput.onchange = () => {
         const currentVariantStockValue = currentVariantStock.dataset.stock;
-        if (Number(cartQtyInput.value) >= Number(currentVariantStockValue)) {
+        if (Number(cartQtyInput.value) > Number(currentVariantStockValue)) {
             alert(
                 'The quantity purchased is too much so it must remain in stock',
             );

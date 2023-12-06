@@ -6,11 +6,6 @@
         </div>
     </div>
     <div>
-        <form action="">
-
-        </form>
-    </div>
-    <div>
         <ul class="grid grid-cols-7 items-center justify-between h-[45px] divide-x-2 relative">
             <li class="order-tab init-order-tab cursor-pointer text-center px-3 py-1 md:text-sm text-xs font-medium text-neutral-500" data-status="all">All Orders</li>
             <li class="order-tab cursor-pointer text-center px-3 py-1 md:text-sm text-xs font-medium text-neutral-500" data-status="Processing">Order Processing</li>
