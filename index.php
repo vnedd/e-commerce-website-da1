@@ -28,6 +28,7 @@ include './model/users.php';
     <link href="https://unpkg.com/@tailwindcss/forms@0.2.1/dist/forms.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <script src="https://cdn.tailwindcss.com"></script>
+     <link rel="stylesheet" href="./startbootstrap-blog-home-gh-pages/css/styles.css">
     <link rel="stylesheet" href="./assets/css/reset.css">
     <link rel="stylesheet" href="./assets/css/index.css">
 </head>
@@ -113,7 +114,7 @@ include './model/users.php';
                                 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                                     $error['email'] = "Email is invalid";
                                 } else {
-                                    $error['email'] = "Pass was sent to your mail";
+                                    $error['email'] = "<span class='form-message text-xs text-green-600 relative leading-3'>Password has sent to your mail </span>";
                                 }
 
                                 $sendMailMess = sendMail($email);
@@ -364,8 +365,15 @@ include './model/users.php';
                             }
                             break;
                         case 'list_post':
+                            
                             include('view/userposts/viewpost.php');
                             break;
+                            case 'view_contact':
+                                include('view/contact/viewcontact.php');
+                                break;
+                                case 'aboutus_site':
+                                    include('view/referencepage/refesite.php');
+                                    break;
                         default:
                             $billboards = getall_billboard();
                             $categories = getall_category();
@@ -391,8 +399,10 @@ include './model/users.php';
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="./assets/js/index.js"></script>
     <script src="./assets/js/shopping-modal.js"></script>
+    <script src="/startbootstrap-blog-home-gh-pages/js/scripts.js"></script>
 </body>
 
 </html>

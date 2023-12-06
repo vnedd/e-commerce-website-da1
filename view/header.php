@@ -13,10 +13,10 @@
                     <a href="index.php?act=shop" class="font-medium text-sm  text-slate-500 hover:text-slate-800 <?php echo isset($_GET['act']) && $_GET['act'] === "shop" ? "text-slate-800 font-medium" : "" ?>">Shop</a>
                 </li>
                 <li>
-                    <a href=" index.php" class="font-medium text-sm  text-slate-500 hover:text-slate-800 <?php echo isset($_GET['act']) && $_GET['act'] === "aboutus" ? "text-slate-800 font-medium" : "" ?>">About us</a>
+                    <a href=" index.php?act=aboutus_site" class="font-medium text-sm  text-slate-500 hover:text-slate-800 <?php echo isset($_GET['act']) && $_GET['act'] === "aboutus" ? "text-slate-800 font-medium" : "" ?>">About us</a>
                 </li>
                 <li>
-                    <a href="index.php" class="font-medium text-sm  text-slate-500 hover:text-slate-800 <?php echo isset($_GET['act']) && $_GET['act'] === "contact" ? "text-slate-800 font-medium" : "" ?>">Contact us</a>
+                    <a href="index.php?act=view_contact" class="font-medium text-sm  text-slate-500 hover:text-slate-800 <?php echo isset($_GET['act']) && $_GET['act'] === "contact" ? "text-slate-800 font-medium" : "" ?>">Contact us</a>
                 </li>
                 <li>
                     <a href="index.php" class="font-medium text-sm  text-slate-500 hover:text-slate-800 <?php echo isset($_GET['act']) && $_GET['act'] === "faqs" ? "text-slate-800 font-medium" : "" ?>">Faqs</a>
@@ -24,6 +24,7 @@
                 <li>
                     <a href="index.php?act=list_post" class="font-medium text-sm  text-slate-500 hover:text-slate-800 <?php echo isset($_GET['act']) && $_GET['act'] === "Posts" ? "text-slate-800 font-medium" : "" ?>">Post</a>
                 </li>
+            
             </ul>
         </nav>
         <div class="ml-auto flex items-center space-x-4">

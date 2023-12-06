@@ -39,7 +39,7 @@
                             <td><img class="w-[150px] h-[80px] object-cover border-2 border-neutral-400 rounded-md" src="../<?php echo $image_path . $image_url ?>" alt="billboard"></td>
                             <td class=" text-sm text-center max-md:hidden"><?php echo $sub_title?></td>
                            
-                            <td class=" text-sm text-center max-md:hidden  w-auto h-10 line-clamp-1" style="width: 150px; overflow: hidden; text-overflow: ellipsis;" ><?php echo $content?></td>
+                            <td class=" text-sm text-center max-md:hidden  w-auto h-10 line-clamp-6" style="width: 150px; overflow: hidden; text-overflow: ellipsis;" ><?php echo $content?></td>
                             <td class=" text-sm max-md:hidden"><?php echo date("d/m/Y", strtotime($post['created_at']))?></td>
                             <td class=" text-sm max-md:hidden"><?php echo $user_id?></td>
                             <td>
