@@ -1,9 +1,35 @@
 <div class=" bg-white shadow-lg px-7 py-2 fixed top-0 left-0 right-0 h-[90px] z-50">
     <div class=" flex items-center justify-between md:justify-start h-full mx-auto">
         <div class="md:hidden">
-            hello
+            <div class="p-2 cursor-pointer show-mobile-nav"><i class="bi bi-list text-3xl"></i></div>
+            <div class="relative w-full">
+                <div class="nav-overlay bg-neutral-600 bg-opacity-40 fixed top-0 -left-[100%] right-0 bottom-0 z-40 hidden transition"></div>
+                <div class="nav-menu bg-white p-5 fixed top-0 bottom-0 -left-[100%] w-[80%] shadow-md z-50 transition-all">
+                    <div class="p-2 absolute right-5 cursor-pointer hide-mobile-nav">
+                        <i class="bi bi-x text-2xl"></i>
+                    </div>
+                    <nav class="mt-10">
+                        <ul class="flex items-center flex-col space-y-7 text-xl">
+                            <li>
+                                <a href="index.php?act=shop" class="font-medium text-sm  text-slate-500 hover:text-slate-800 <?php echo isset($_GET['act']) && $_GET['act'] === "shop" ? "text-slate-800 font-medium" : "" ?>">Shop</a>
+                            </li>
+                            <li>
+                                <a href=" index.php" class="font-medium text-sm  text-slate-500 hover:text-slate-800 <?php echo isset($_GET['act']) && $_GET['act'] === "aboutus" ? "text-slate-800 font-medium" : "" ?>">About us</a>
+                            </li>
+                            <li>
+                                <a href="index.php" class="font-medium text-sm  text-slate-500 hover:text-slate-800 <?php echo isset($_GET['act']) && $_GET['act'] === "contact" ? "text-slate-800 font-medium" : "" ?>">Contact us</a>
+                            </li>
+                            <li>
+                                <a href="index.php" class="font-medium text-sm  text-slate-500 hover:text-slate-800 <?php echo isset($_GET['act']) && $_GET['act'] === "faqs" ? "text-slate-800 font-medium" : "" ?>">Faqs</a>
+                            </li>
+                            <li>
+                                <a href="index.php?act=list_post" class="font-medium text-sm  text-slate-500 hover:text-slate-800 <?php echo isset($_GET['act']) && $_GET['act'] === "Posts" ? "text-slate-800 font-medium" : "" ?>">Post</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
         </div>
-
         <div class="items-center space-x-3 lg:pr-16 pr-6 shrink hidden md:flex">
             <a href="index.php"><img src="./assets/img/logo.svg" alt="logo" class="w-14 h-14"></a>
         </div>
@@ -55,3 +81,22 @@
         </div>
     </div>
 </div>
+
+
+<script>
+    const navOverlay = document.querySelector('.nav-overlay')
+    const navMenu = document.querySelector('.nav-menu')
+    const showNavBtn = document.querySelector('.show-mobile-nav')
+    const hideNavBtn = document.querySelector('.hide-mobile-nav')
+
+    showNavBtn.addEventListener('click', function() {
+        navOverlay.classList.remove('hidden')
+        navMenu.classList.remove('-left-[100%]')
+        navMenu.classList.add('left-0')
+    })
+    hideNavBtn.addEventListener('click', function() {
+        navOverlay.classList.add('hidden')
+        navMenu.classList.remove('left-0')
+        navMenu.classList.add('-left-[100%]')
+    })
+</script>
