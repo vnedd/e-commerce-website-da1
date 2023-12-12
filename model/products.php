@@ -125,9 +125,20 @@ function inscrease_views($product_id)
     pdo_execute($sql);
 }
 
-function load_product_samecategories($product_id, $category_id)
+function getall_products(){
+    $sql = "SELECT * from products";
+    return pdo_query($sql);
+}
+function load_product_samecategories()
 {
-    $sql = "select * from products where category_id = $category_id and product_id = $product_id";
+    $sql = "SELECT products.*, categories.name as category_name, GROUP_CONCAT(images.image_url) AS image_urls
+    FROM products
+    INNER JOIN images ON products.product_id = images.product_id
+    LEFT JOIN categories ON products.category_id = categories.category_id
+    WHERE products.product_id = products.product_id
+    GROUP BY products.product_id
+    LIMIT 10";
     $result = pdo_query($sql);
     return $result;
 }
+

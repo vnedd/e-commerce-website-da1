@@ -100,10 +100,12 @@
     togglePassword.addEventListener('click', () => {
         if (inputPassword.type === "password") {
             inputPassword.type = 'text';
-            togglePassword.innerHTML = `<i class="bi bi-eye-slash text-slate-700"></i>`
+            togglePassword.innerHTML = `<i class="bi bi-eye"></i>`
         } else {
             inputPassword.type = 'password'
-            togglePassword.innerHTML = `<i class="bi bi-eye"></i>`
+            togglePassword.innerHTML = `<i class="bi bi-eye-slash text-slate-700"></i>`
         }
     })
 </script>
+<!-- <i class="bi bi-eye-slash text-slate-700"></i> -->
+<!-- <i class="bi bi-eye"></i> -->

@@ -1,5 +1,5 @@
 <!-- Modal Overlay -->
-<div id="modalOverlay" class="fixed top-0 left-0 right-0 bottom-0 bg-slate-900 bg-opacity-40 z-50 hidden justify-center items-center ">
+<div id="modalOverlay" class="fixed top-0 left-0 right-0 bottom-0 bg-slate-900 bg-opacity-40 z-50 hidden justify-center items-center  ">
     <!-- Modal Content -->
     <div class="bg-white lg:w-[800px] py-6 px-4 rounded-lg relative animate__animated animate__flipInX animate__faster">
         <div class="absolute right-2 top-2 w-8 h-8 rounded-full hover:bg-slate-100 flex items-center justify-center cursor-pointer" onclick="closeModal()"><i class="bi bi-x text-lg"></i></div>

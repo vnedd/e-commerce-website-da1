@@ -98,7 +98,7 @@
 
 <!-- product variant -->
 <script>
-    function addVariant() {
+    function    addVariant() {
         const container = document.getElementById('variants-container');
         const variantsElmLength = document.querySelectorAll('.variant').length;
 

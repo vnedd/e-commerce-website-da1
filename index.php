@@ -349,16 +349,16 @@ include './model/users.php';
                             break;
                         case 'product':
                             if (isset($_GET['product_id'])) {
+                                $products = getall_products();
                                 $product_id = $_GET['product_id'];
                                 $product = getone_product_client($product_id);
                                 $variants = getall_variant_by_productId($product_id);
-
-
+                                $same_cate_pro= load_product_samecategories();
                                 inscrease_views($product_id);
                                 $variantDataJson = json_encode($variants);
-
                                 extract($product);
                                 $image_urls = explode(',', $image_urls);
+                              
                                 include('./view/product.php');
                             } else {
                                 header('location: index.php');
