@@ -19,7 +19,7 @@
         </div>
     </div>
 </div>
-
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
     const tabs = document.querySelectorAll('.order-tab');
 
@@ -46,17 +46,15 @@
     fetchData('all');
 
     function fetchData(orderStatus) {
-        const xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === XMLHttpRequest.DONE) {
-                if (xhr.status === 200) {
-                    document.getElementById('order-details').innerHTML = xhr.responseText;
-                } else {
-                    console.error('Error fetching data');
-                }
+        $.ajax({
+            type: 'GET',
+            url: `orders/get_orders.php?order_status=${orderStatus}`,
+            success: function(response) {
+                $('#order-details').html(response);
+            },
+            error: function() {
+                console.error('Error fetching data');
             }
-        };
-        xhr.open('GET', `orders/get_orders.php?order_status=${orderStatus}`, true);
-        xhr.send();
+        });
     }
 </script>
