@@ -1,9 +1,8 @@
 <div class=" bg-white shadow-lg px-7 py-2 fixed top-0 left-0 right-0 h-[90px] z-50">
     <div class=" flex items-center justify-between md:justify-start h-full mx-auto">
         <div class="md:hidden">
-            hello
+            <div class="p-2 cursor-pointer show-mobile-nav"><i class="bi bi-list text-3xl"></i></div>
         </div>
-
         <div class="items-center space-x-3 lg:pr-16 pr-6 shrink hidden md:flex">
             <a href="index.php"><img src="./assets/img/logo.svg" alt="logo" class="w-14 h-14"></a>
         </div>

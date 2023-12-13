@@ -38,7 +38,7 @@
                                 </div>
                             </div>
                             <h4 class="col-span-1 text-center lg:text-xl text-base">$<?php echo $price ?></h4>
-                            <a href="index.php?act=delete-cart&cart-id=<?php echo $key ?>" class="lg:col-span-1 col-span-2 hover:underline text-right">Remove</a>
+                            <a href="index.php?act=delete-cart&cart-id=<?php echo $key ?>" onclick="confirmDelete(this.href); return false;" class="lg:col-span-1 col-span-2 hover:underline text-right">Remove</a>
                         </div>
                         <div class="variant-stock" data-stock="<?php echo $variant_stock ?>"></div>
                         <div class="divider"></div>

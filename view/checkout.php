@@ -1,6 +1,6 @@
 <div class="container mx-auto max-w-[1440px] my-12 p-4  pt-14 md:p-8">
     <form class="grid grid-cols-5 gap-6 gap-x-8" action="" method="post">
-        <div class="col-span-2">
+        <div class="md:col-span-2 col-span-full">
             <h2 class="font-semibold text-xl">Enter your Shipping address</h2>
             <div class="grid grid-cols-1 gap-4 mt-5">
                 <div class="flex flex-col space-y-2">
@@ -25,7 +25,7 @@
                 <?php echo !empty($error['address']) ? '<span class="text-red-500 text-sm">' . $error['address'] . '</span>' : ""  ?>
             </div>
         </div>
-        <div class="col-span-3">
+        <div class="md:col-span-3 col-span-full">
             <h2 class="font-semibold text-xl">Your cart items</h2>
             <div class="mt-6">
                 <?php
@@ -45,8 +45,8 @@
                 }
                 ?>
             </div>
-            <div class="grid grid-cols-2 gap-x-10">
-                <div class="flex flex-col space-y-2 mt-4 w-w">
+            <div class="grid md:grid-cols-2 grid-cols-1 gap-y-8 gap-x-10">
+                <div class="flex flex-col space-y-2 mt-4">
                     <label for="order-note" class="font-semibold text-sm">Note to seller?</label>
                     <textarea name="order-note" id="order-note" cols="3" rows="5" class="rounded-md py-2 px-3" placeholder="Enter something for order"></textarea>
                 </div>

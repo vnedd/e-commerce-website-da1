@@ -54,6 +54,7 @@ if (bannerWrapper) {
 // start handler swipper
 const swiperCategory = document.querySelector('.swipper-category');
 const swiperProduct = document.querySelector('.swipper-product');
+const swiperProductLatest = document.querySelector('.swipper-product-latest');
 
 const swiperParams = {
     slidesPerView: 1,
@@ -78,8 +79,12 @@ const swiperParams = {
 if (swiperCategory) {
     Object.assign(swiperCategory, swiperParams);
 }
+
 if (swiperProduct) {
     Object.assign(swiperProduct, swiperParams);
+}
+if (swiperProductLatest) {
+    Object.assign(swiperProductLatest, swiperParams);
 }
 
 // end handler swipper
@@ -93,5 +98,18 @@ function getParent(element, selector) {
                 return element;
             }
         }
+    }
+}
+function confirmDelete(url) {
+    const result = confirm('Are you sure to delete this?');
+    if (result) {
+        window.location.href = url;
+    }
+}
+
+function confirmCancle(url) {
+    const result = confirm('Are you sure to cancel this order?');
+    if (result) {
+        window.location.href = url;
     }
 }

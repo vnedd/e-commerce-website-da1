@@ -1,3 +1,4 @@
+
 <?php
 
 function insert_variant($name, $price, $quantity, $product_id)

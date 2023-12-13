@@ -85,12 +85,12 @@
                 }
                 ?>
             </div>
-            <div class="flex justify-center mt-6">
+            <div class="flex justify-center mt-20">
                 <div class="join">
                     <?php
                     for ($i = 1; $i <= $totalPages; $i++) {
                     ?>
-                        <button class="pagination-item  join-item btn bg-violet-400 hover:bg-violet-600 text-white <?php echo $page == $i ? "btn-active bg-violet-800" : "" ?>" data-page="<?php echo $i ?>"><?php echo $i ?></button>
+                        <button class="pagination-item  join-item btn bg-slate-400 hover:bg-slate-600 text-white <?php echo $page == $i ? "btn-active bg-slate-800" : "" ?>" data-page="<?php echo $i ?>"><?php echo $i ?></button>
                     <?php
                     }
                     ?>

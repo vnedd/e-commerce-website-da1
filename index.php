@@ -216,7 +216,6 @@ include './model/users.php';
                                 }
                             }
                             break;
-
                         case 'delete-cart':
                             $_SESSION['carts'];
                             if (isset($_GET['cart-id'])) {
