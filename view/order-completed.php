@@ -12,11 +12,3 @@
         </div>
     </div>
 </div>
-<script>
-    function confirmCancle(url) {
-        const result = confirm("Are you sure to cancel this order?");
-        if (result) {
-            window.location.href = url;
-        }
-    }
-</script>
